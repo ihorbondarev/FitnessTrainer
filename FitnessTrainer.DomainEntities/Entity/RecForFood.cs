@@ -11,7 +11,7 @@ namespace FitnessTrainer.DomainEntities.Entity
         [Display(Name = "Назва")]
         public string Name { get; set; }
         [Display(Name = "Опис")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public List<WorkoutPlan> WorkoutPlans { get; set; } = new List<WorkoutPlan>();
         public List<Food> Foods { get; set; } = new List<Food>();

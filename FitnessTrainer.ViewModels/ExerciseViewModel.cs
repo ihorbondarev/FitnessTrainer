@@ -8,18 +8,19 @@ namespace FitnessTrainer.ViewModels
     {
         public int Id { get; set; }
         [Display(Name="Название")]
+        [Required]
         public string Name { get; set; }
         [Display(Name = "Изображение")]
         public IFormFile ImagePath { get; set; }
         [Display(Name = "Описание")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Display(Name = "Кол. подходов")]
-        public int NumberOfApproaches { get; set; }
+        public int? NumberOfApproaches { get; set; }
         [Display(Name = "Кол. повторений")]
-        public int NumberOfRepetitions { get; set; }
+        public int? NumberOfRepetitions { get; set; }
         [Display(Name = "Отдых между подходами")]
-        public TimeSpan TimeBetweenSets { get; set; }
+        public TimeSpan? TimeBetweenSets { get; set; }
         [Display(Name = "Отдых после упражнения")]
-        public TimeSpan RestTimeAtTheEnd { get; set; }
+        public TimeSpan? RestTimeAtTheEnd { get; set; }
     }
 }

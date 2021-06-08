@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using FitnessTrainer.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using X.PagedList;
 
 namespace FitnessTrainer.Controllers
 {
@@ -27,7 +28,7 @@ namespace FitnessTrainer.Controllers
         }
 
         // GET: WorkoutPlans
-        public IActionResult Index(string searchString)
+        public IActionResult Index(string searchString, int? page, int pageSize = 5)
         {
             ViewData["CurrentFilter"] = searchString;
             List<WorkoutPlan> plans;
@@ -38,6 +39,9 @@ namespace FitnessTrainer.Controllers
             {
                 plans = _context.WorkoutPlans.Where(s => s.Name.Contains(searchString)).ToList();
             }
+
+            int pageNumber = (page ?? 1);
+            ViewBag.workoutPlansList = plans.ToPagedList(pageNumber, pageSize);
 
             return View(plans);
         }
@@ -71,7 +75,7 @@ namespace FitnessTrainer.Controllers
             List<Exercise> exlist = workoutPlan.Exercises;
 
             ViewBag.Exercises = exlist;
-            ViewBag.ImageString = workoutPlan.ImagePath;
+            ViewBag.ImageString = workoutPlan.ImagePath.ToString();
 
             return View(model);
         }

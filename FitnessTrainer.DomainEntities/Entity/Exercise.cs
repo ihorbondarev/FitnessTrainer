@@ -14,15 +14,15 @@ namespace FitnessTrainer.DomainEntities.Entity
         [Display(Name = "Зображення")]
         public string ImagePath { get; set; }
         [Display(Name = "Опис")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Display(Name = "Кількість підходів")]
-        public int NumberOfApproaches { get; set; }
+        public int? NumberOfApproaches { get; set; }
         [Display(Name = "Кількість повторів")]
-        public int NumberOfRepetitions { get; set; }
+        public int? NumberOfRepetitions { get; set; }
         [Display(Name = "Перерва між підходами")]
-        public TimeSpan TimeBetweenSets { get; set; }
+        public TimeSpan? TimeBetweenSets { get; set; }
         [Display(Name = "Перерва після вправи")]
-        public TimeSpan RestTimeAtTheEnd { get; set; }
+        public TimeSpan? RestTimeAtTheEnd { get; set; }
 
         public List<WorkoutPlan> Plans { get; set; }
     }

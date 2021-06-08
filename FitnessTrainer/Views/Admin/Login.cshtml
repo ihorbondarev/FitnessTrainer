@@ -6,14 +6,16 @@
         <h1>Авторизація</h1>
 
         <form asp-controller="Admin" asp-action="Login" method="post">
-            <div asp-validation-summary="All"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Логін</label>
-                <input asp-for="UserName" class="form-control" id="floatingInput"/>
+                <input asp-for="UserName" class="form-control" id="floatingInput" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-floating">
                 <label for="floatingPassword">Пароль</label>
                 <input asp-for="Password" type="password" class="form-control" id="floatingPassword">
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <br />
             <div>

@@ -11,11 +11,11 @@ namespace FitnessTrainer.DomainEntities.Entity
         [Display(Name = "Підписка")]
         public bool Subscription { get; set; }
         [Display(Name = "Вік")]
-        public int Age { get; set; }
+        public int? Age { get; set; }
         [Display(Name = "Вага")]
-        public int Weight { get; set; }
+        public int? Weight { get; set; }
         [Display(Name = "Зріст")]
-        public int Height { get; set; }
+        public int? Height { get; set; }
 
         public List<WorkoutPlan> Plans { get; set; }
     }

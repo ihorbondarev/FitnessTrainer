@@ -99,21 +99,27 @@ namespace FitnessTrainer.Controllers
 
             if(user == null)
             {
-                ModelState.AddModelError("", "User not found");
+                ModelState.AddModelError("", "Користувача з логіном " + model.UserName + " не знайдено");
                 return View(model);
-            }
-
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-
-            if (result.Succeeded)
+            } else if(await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                if (!User.IsInRole("Administrator"))
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+                if (result.Succeeded)
                 {
-                    return Redirect("/Admin/Index");
-                } else
-                {
-                    return Redirect("/Admin/Index");
+                    if (!User.IsInRole("Administrator"))
+                    {
+                        return Redirect("/Admin/Index");
+                    }
+                    else
+                    {
+                        return Redirect("/Admin/Index");
+                    }
                 }
+            } else
+            {
+                ModelState.AddModelError("", "Невірний пароль");
+                return View(model);
             }
 
             return View(model);

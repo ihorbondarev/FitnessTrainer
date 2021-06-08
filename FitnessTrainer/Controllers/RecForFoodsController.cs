@@ -9,6 +9,7 @@ using FitnessTrainer.DataAccess.DbContexts;
 using FitnessTrainer.DomainEntities.Entity;
 using Microsoft.AspNetCore.Authorization;
 using FitnessTrainer.ViewModels;
+using X.PagedList;
 
 namespace FitnessTrainer.Controllers
 {
@@ -23,7 +24,7 @@ namespace FitnessTrainer.Controllers
         }
 
         // GET: RecForFoods
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, int? page, int pageSize = 5)
         {
             ViewData["CurrentFilter"] = searchString;
 
@@ -34,7 +35,10 @@ namespace FitnessTrainer.Controllers
                 recForFoods = recForFoods.Where(m => m.Name.Contains(searchString));
             }
 
-            return View(await recForFoods.ToListAsync());
+            int pageNumber = (page ?? 1);
+            ViewBag.recsList = await recForFoods.ToPagedListAsync(pageNumber, pageSize);
+
+            return View(recForFoods);
         }
 
         // GET: RecForFoods/Details/5

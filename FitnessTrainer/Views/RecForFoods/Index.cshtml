@@ -4,6 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Core.Common;
+@using X.PagedList
+
 <h1>Сторінка списків продуктів</h1>
 
 <div class="container my-4">
@@ -25,27 +29,36 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th class="d-none d-md-table-cell">
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td class="p-2">
-                <div class="row mb-1"><a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Змінити</a></div>
-                <div class="row mb-1"><a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Переглянути</a></div>
-                <div class="row"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Видалити</a></div>
-            </td>
-        </tr>
-}
+        @foreach (var item in ViewBag.recsList)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td class="d-none d-md-table-cell">
+                    @item.Description
+                </td>
+                <td class="p-2">
+                    <div class="row mb-1"><a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Змінити</a></div>
+                    <div class="row mb-1"><a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Переглянути</a></div>
+                    <div class="row"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Видалити</a></div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@Html.PagedListPager((IPagedList)ViewBag.recsList, page => Url.Action("Index", new { page = page, searchString = @ViewData["CurrentFilter"] }), new PagedListRenderOptions
+{
+    LinkToFirstPageFormat = "<<",
+    LinkToLastPageFormat = ">>",
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new string[] { "page-link" }
+})

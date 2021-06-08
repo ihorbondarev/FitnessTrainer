@@ -10,37 +10,36 @@
     <h4>План тренувальних вправ</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 mt-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 mt-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 mt-2">
             @Html.DisplayNameFor(model => model.ImagePath)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
+            @ViewBag.ImageString
         </dd>
-        <dt class="col-sm-3">
+        <dt class="col-sm-2 mt-2">
             @Html.DisplayNameFor(model => model.ImagePath)
         </dt>
         @if (ViewBag.ImageString != null)
         {
-            <dd class="col-sm-8">
+            <dd class="col-sm-10">
                 <img src="~/images/@ViewBag.ImageString"
-                     class="img-thumbnail"
-                     height="100" width="100"
+                     class="rounded" height="100" width="100"
                      asp-append-version="true" />
             </dd>
         }
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 mt-2">
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd class="col-sm-10">
@@ -79,9 +78,9 @@
                         <tr>
                             <th>Зображення</th>
                             <th>Назва</th>
-                            <th>Опис</th>
-                            <th class="d-none d-sm-table-cell">Кількість підходів</th>
-                            <th class="d-none d-sm-table-cell">Кількість повторів</th>
+                            <th class="d-none d-md-table-cell">Опис</th>
+                            <th class="d-none d-md-table-cell">Кількість підходів</th>
+                            <th class="d-none d-md-table-cell">Кількість повторів</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,20 +89,20 @@
                             <tr>
                                 <td>
                                     <img src="~/images/@item.ImagePath"
-                                         class="img-thumbnail"
-                                         height="100" width="100"
+                                         class="rounded"
+                                         height="120" width="120"
                                          asp-append-version="true" />
                                 </td>
                                 <td>
                                     @item.Name
                                 </td>
-                                <td>
+                                <td class="d-none d-md-table-cell">
                                     @item.Description
                                 </td>
-                                <td class="d-none d-sm-table-cell">
+                                <td class="d-none d-md-table-cell">
                                     @item.NumberOfApproaches
                                 </td>
-                                <td class="d-none d-sm-table-cell">
+                                <td class="d-none d-md-table-cell">
                                     @item.NumberOfRepetitions
                                 </td>
                             </tr>

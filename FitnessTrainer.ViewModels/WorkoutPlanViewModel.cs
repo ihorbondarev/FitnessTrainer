@@ -12,7 +12,7 @@ namespace FitnessTrainer.ViewModels
         [Display(Name = "Назва")]
         public string Name { get; set; }
         [Display(Name = "Опис")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Display(Name = "Зображення")]
         public IFormFile ImagePath { get; set; }
         [Display(Name = "Статус")]

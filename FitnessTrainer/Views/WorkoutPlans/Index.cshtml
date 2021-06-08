@@ -4,6 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Core.Common;
+@using X.PagedList
+
 <h1>Сторінка тренувальних планів</h1>
 
 <div class="container my-4">
@@ -28,33 +32,42 @@
             <th>
                 Назва
             </th>
-            <th class="d-none d-sm-table-cell">
+            <th class="d-none d-md-table-cell">
                 Статус
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <img src="~/images/@item.ImagePath"
-                     class="img-thumbnail"
-                     height="100" width="100"
-                     asp-append-version="true" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td class="d-none d-sm-table-cell">
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td class="p-2">
-                <div class="row mb-1"><a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Змінити</a></div>
-                <div class="row mb-1"><a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Переглянути</a></div>
-                <div class="row"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Видалити</a></div>
-            </td>
-        </tr>
-}
+        @foreach (var item in ViewBag.workoutPlansList)
+        {
+            <tr>
+                <td>
+                    <img src="~/images/@item.ImagePath"
+                         class="rounded"
+                         height="100" width="100"
+                         asp-append-version="true" />
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td class="d-none d-md-table-cell">
+                    @item.Status
+                </td>
+                <td class="p-2">
+                    <div class="row mb-1"><a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Змінити</a></div>
+                    <div class="row mb-1"><a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Переглянути</a></div>
+                    <div class="row"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Видалити</a></div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@Html.PagedListPager((IPagedList)ViewBag.workoutPlansList, page => Url.Action("Index", new { page = page, searchString = @ViewData["CurrentFilter"] }), new PagedListRenderOptions
+{
+    LinkToFirstPageFormat = "<<",
+    LinkToLastPageFormat = ">>",
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new string[] { "page-link" }
+})

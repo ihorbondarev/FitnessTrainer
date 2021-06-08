@@ -29,7 +29,7 @@ namespace FitnessTrainer.Controllers
         }
 
         // GET: Exercises
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(int? page, string searchString, int pageSize = 5)
         {
             ViewData["CurrentFilter"] = searchString;
 
@@ -40,7 +40,10 @@ namespace FitnessTrainer.Controllers
                 exercises = _context.Exercises.Where(s => s.Name.Contains(searchString));
             }
 
-            return View(await exercises.ToListAsync());
+            int pageNumber = (page ?? 1);
+            ViewBag.exList = await exercises.ToPagedListAsync(pageNumber, pageSize);
+
+            return View(exercises);
         }
 
         // GET: Exercises/Details/5

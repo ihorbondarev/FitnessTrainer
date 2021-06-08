@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-xl navbar-toggleable navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-xl navbar-toggleable navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FitnessTrainer</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -25,19 +25,19 @@
                         @if (User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">Головна</a>
+                                <a class="nav-link text-light" asp-controller="Admin" asp-action="Index">Головна</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Exercises" asp-action="Index">Вправи</a>
+                                <a class="nav-link text-light" asp-controller="Exercises" asp-action="Index">Вправи</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Foods" asp-action="Index">Продукти</a>
+                                <a class="nav-link text-light" asp-controller="Foods" asp-action="Index">Продукти</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="RecForFoods" asp-action="Index">Харчування</a>
+                                <a class="nav-link text-light" asp-controller="RecForFoods" asp-action="Index">Харчування</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="WorkoutPlans" asp-action="Index">Плани тренувань</a>
+                                <a class="nav-link text-light" asp-controller="WorkoutPlans" asp-action="Index">Плани тренувань</a>
                             </li>
                         }
                     </ul>
@@ -52,9 +52,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer fixed-bottom text-muted">
+    <footer class="border-top footer bg-dark fixed-bottom text-muted">
         <div class="container text-center">
-            &copy; 2021 - FitnessTrainer - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - FitnessTrainer
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

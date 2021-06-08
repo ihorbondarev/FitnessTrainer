@@ -9,9 +9,10 @@ namespace FitnessTrainer.ViewModels
     {
         public int Id { get; set; }
         [Display(Name = "Назва")]
+        [Required]
         public string Name { get; set; }
         [Display(Name = "Опис")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public List<FoodViewModel> Foods { get; set; }
     }
 }
