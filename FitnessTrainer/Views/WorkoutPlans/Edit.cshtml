@@ -9,7 +9,7 @@
 <h4>План тренувальних вправ</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-9 col-sm-12">
         <form asp-action="Edit" method="post" enctype="multipart/form-data" asp-controller="WorkoutPlans">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control" rows="9"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
