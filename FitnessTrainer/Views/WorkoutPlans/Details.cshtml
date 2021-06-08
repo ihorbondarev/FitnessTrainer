@@ -1,0 +1,124 @@
+﻿@model FitnessTrainer.ViewModels.WorkoutPlanViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Інформація</h1>
+
+<div>
+    <h4>План тренувальних вправ</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ImagePath)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+        @if (ViewBag.ImageString != null)
+        {
+            <dd class="col-sm-8">
+                <img src="~/images/@ViewBag.ImageString"
+                     class="img-thumbnail"
+                     height="100" width="100"
+                     asp-append-version="true" />
+            </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+    @if(Model.RecForFood != null)
+            {
+                <hr />
+                <h4>Обраний список продуктів</h4>
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        Назва
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Model.RecForFood.Name
+                    </dd>
+                    <dt class="col-sm-2">
+                        Опис
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Model.RecForFood.Description
+                    </dd>
+                </dl>
+            } else
+            {
+                <hr />
+                <h4>Список продуктів не обрано</h4>
+            }
+    @if(ViewBag.Exercises != null)
+            {
+                <hr />
+                <h4>Список тренувальних вправ</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Зображення</th>
+                            <th>Назва</th>
+                            <th>Опис</th>
+                            <th class="d-none d-sm-table-cell">Кількість підходів</th>
+                            <th class="d-none d-sm-table-cell">Кількість повторів</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Exercises)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/images/@item.ImagePath"
+                                         class="img-thumbnail"
+                                         height="100" width="100"
+                                         asp-append-version="true" />
+                                </td>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Description
+                                </td>
+                                <td class="d-none d-sm-table-cell">
+                                    @item.NumberOfApproaches
+                                </td>
+                                <td class="d-none d-sm-table-cell">
+                                    @item.NumberOfRepetitions
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            } else
+            {
+                <hr />
+                <h4>Тренувальні вправи відсутні</h4>
+            }
+</div>
+<div>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
+</div>
+<br />
+<hr />
+<a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>

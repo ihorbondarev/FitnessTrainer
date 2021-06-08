@@ -1,0 +1,77 @@
+﻿@model FitnessTrainer.ViewModels.ExerciseViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Додати</h1>
+
+<h4>Вправа</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="ImagePath" class="custom-file-input" type="file" id="customFile">
+                    <label class="custom-file-label" for="customFile">Обрати файл</label>
+                </div>
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3" style="min-height: 50px;"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfApproaches" class="control-label"></label>
+                <input asp-for="NumberOfApproaches" class="form-control" />
+                <span asp-validation-for="NumberOfApproaches" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfRepetitions" class="control-label"></label>
+                <input asp-for="NumberOfRepetitions" class="form-control" />
+                <span asp-validation-for="NumberOfRepetitions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeBetweenSets" class="control-label"></label>
+                <input asp-for="TimeBetweenSets" class="form-control" type="time" />
+                <span asp-validation-for="TimeBetweenSets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RestTimeAtTheEnd" class="control-label"></label>
+                <input asp-for="RestTimeAtTheEnd" class="form-control" type="time" />
+                <span asp-validation-for="RestTimeAtTheEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Додати вправу" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+<hr />
+<div>
+    <a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script type="text/javascript">
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+}

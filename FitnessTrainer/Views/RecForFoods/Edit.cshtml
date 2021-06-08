@@ -1,0 +1,133 @@
+﻿@model FitnessTrainer.ViewModels.RecForFoodViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Редагування</h1>
+
+<h4>Список продуктів</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="form-label mr-4">Додати продукти</label>
+                <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#foodModal">Додати продукти</button>
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="submit" value="Змінити" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+    <br />
+    <hr />
+    <br />
+    @if (Model.Foods != null)
+    {
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Назва</th>
+                        <th>Калорії</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.Foods)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelitem => i.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => i.Calories)
+                            </td>
+                            <td>
+                                <form method="post" asp-action="DeleteFoodFromPlan">
+                                    <input type="hidden" value="@Model.Id" name="idplan" />
+                                    <input type="hidden" value="@i.Id" name="idfood" />
+                                    <button type="submit" class="btn btn-outline-dark">Видалити</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+<br />
+<div>
+    <a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
+</div>
+
+<div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Список продуктів</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Назва
+                            </th>
+                            <th>
+                                Калорії
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in ViewBag.foodList)
+                        {
+                            <tr>
+                                <td>
+                                    @s.Name
+                                </td>
+                                <td>
+                                    @s.Calories
+                                </td>
+                                <th>
+                                    <form method="post" asp-action="AddFoodToPlan">
+                                        <input type="hidden" value="@Model.Id" name="planid" />
+                                        <input type="hidden" value="@s.Id" name="foodid" />
+                                        <button type="submit" class="btn btn-outline-dark">Додати</button>
+                                    </form>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрити</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

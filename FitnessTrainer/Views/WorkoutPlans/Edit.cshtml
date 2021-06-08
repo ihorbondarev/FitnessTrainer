@@ -1,0 +1,282 @@
+﻿@model FitnessTrainer.ViewModels.WorkoutPlanViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Редагування</h1>
+
+<h4>План тренувальних вправ</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data" asp-controller="WorkoutPlans">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="OldImagePath" value="@ViewBag.OldImagePath" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="ImagePath" class="custom-file-input" type="file" id="customFile">
+                    <label class="custom-file-label" for="customFile">Обрати файл</label>
+                </div>
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    @if (Model.Status == 0)
+                    {
+                        <option selected>0</option>
+                        <option>1</option>
+                    }
+                    else
+                    {
+                        <option selected>1</option>
+                        <option>0</option>
+                    }
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            @if (Model.RecForFood == null)
+            {
+                <br />
+                <hr />
+                <div class="form-group">
+                    <label class="form-label">Додати план харчування</label>
+                    <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#recForFoodModal">Додати план харчування</button>
+                </div>
+            }
+            else
+            {
+                <br />
+                <hr />
+                <div class="form-group">
+                    <label class="form-label">Обраний харчування: <strong>@Model.RecForFood.Name</strong></label>
+                </div>
+            }
+            <br />
+            <div class="form-group">
+                <label class="form-label">Додати вправи</label>
+                <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#exercisesModal">Додати вправи</button>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Змінити" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@if (Model.RecForFood != null)
+{
+    <br />
+    <hr />
+    <div class="row ml-2">
+        <div>
+            <h4>План харчування</h4>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Назва
+                </dt>
+                <dd class="col-sm-10">@Model.RecForFood.Name</dd>
+                <dt class="col-sm-2">
+                    Опис
+                </dt>
+                <dd class="col-sm-10">@Model.RecForFood.Description</dd>
+            </dl>
+        </div>
+        <form method="post" asp-action="DeleteRecForFoodFromWorkoutPlan">
+            <input type="hidden" value="@Model.Id" name="workoutplanid" />
+            <button type="submit" class="btn btn-outline-dark">Видалити</button>
+        </form>
+    </div>
+}
+@if (Model.Exercises != null)
+{
+    <br />
+    <hr />
+    <div class="row ml-2">
+        <div>
+            <h4>Вправи</h4>
+            <br />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Зображення
+                        </th>
+                        <th>
+                            Назва
+                        </th>
+                        <th class="d-none d-sm-table-cell">
+                            Кількість підходів
+                        </th>
+                        <th class="d-none d-sm-table-cell">
+                            Кількість повторів
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Exercises)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/images/@item.ImagePath"
+                                     class="img-thumbnail"
+                                     height="100" width="100"
+                                     asp-append-version="true" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => item.Name)
+                            </td>
+                            <td class="d-none d-sm-table-cell">
+                                @Html.DisplayFor(modelitem => item.NumberOfApproaches)
+                            </td>
+                            <td class="d-none d-sm-table-cell">
+                                @Html.DisplayFor(modelitem => item.NumberOfRepetitions)
+                            </td>
+                            <td>
+                                <form method="post" asp-action="DeleteExerciseFromWorkoutPlan">
+                                    <input type="hidden" value="@Model.Id" name="workoutplanid" />
+                                    <input type="hidden" value="@item.Id" name="exerciseid" />
+                                    <button type="submit" class="btn btn-outline-dark">Видалити</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<br />
+<hr />
+<div>
+    <a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
+</div>
+
+<div class="modal fade" id="recForFoodModal" tabindex="-1" aria-labelledby="recForFoodModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Список планів харчування</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Назва
+                            </th>
+                            <th>
+                                Опис
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in ViewBag.RecForFoodList)
+                        {
+                            <tr>
+                                <td>
+                                    @s.Name
+                                </td>
+                                <td>
+                                    @s.Description
+                                </td>
+                                <th>
+                                    <form method="post" asp-action="AddRecForFoodToWorkoutPlan">
+                                        <input type="hidden" value="@Model.Id" name="workoutplanid" />
+                                        <input type="hidden" value="@s.Id" name="recforfoodid" />
+                                        <button type="submit" class="btn btn-outline-dark">Додати</button>
+                                    </form>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрити</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exercisesModal" tabindex="-1" aria-labelledby="exercisesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Список тренувальних вправ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Назва
+                            </th>
+                            <th>
+                                Опис
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in ViewBag.ExercisesList)
+                        {
+                            <tr>
+                                <td>
+                                    @s.Name
+                                </td>
+                                <td>
+                                    @s.Description
+                                </td>
+                                <th>
+                                    <form method="post" asp-action="AddExerciseToWorkoutPlan">
+                                        <input type="hidden" value="@Model.Id" name="workoutplanid" />
+                                        <input type="hidden" value="@s.Id" name="exerciseid" />
+                                        <button type="submit" class="btn btn-outline-dark">Додати</button>
+                                    </form>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    </script>
+}

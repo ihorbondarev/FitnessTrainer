@@ -1,0 +1,56 @@
+﻿@model FitnessTrainer.DomainEntities.Entity.Food
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Редагування</h1>
+
+<h4>Продукт</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Calories" class="control-label"></label>
+                <input asp-for="Calories" class="form-control" />
+                <span asp-validation-for="Calories" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Proteins" class="control-label"></label>
+                <input asp-for="Proteins" class="form-control" />
+                <span asp-validation-for="Proteins" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fats" class="control-label"></label>
+                <input asp-for="Fats" class="form-control" />
+                <span asp-validation-for="Fats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Carbohydrates" class="control-label"></label>
+                <input asp-for="Carbohydrates" class="form-control" />
+                <span asp-validation-for="Carbohydrates" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Змінити" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<hr />
+
+<div>
+    <a class="btn btn-link" asp-action="Index">< Повернутися до списку продуктів</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

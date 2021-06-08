@@ -1,0 +1,24 @@
+﻿@model FitnessTrainer.ViewModels.LoginViewModel
+
+
+<div class="row justify-content-center" style="margin-top: 10%;">
+    <div class="col-lg-4 col-md-5 col-sm-9 col-9">
+        <h1>Авторизація</h1>
+
+        <form asp-controller="Admin" asp-action="Login" method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="form-floating mb-3">
+                <label for="floatingInput">Логін</label>
+                <input asp-for="UserName" class="form-control" id="floatingInput"/>
+            </div>
+            <div class="form-floating">
+                <label for="floatingPassword">Пароль</label>
+                <input asp-for="Password" type="password" class="form-control" id="floatingPassword">
+            </div>
+            <br />
+            <div>
+                <input class="btn btn-primary" type="submit" value="Увійти" />
+            </div>
+        </form>
+    </div>
+</div>

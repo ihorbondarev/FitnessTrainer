@@ -1,0 +1,27 @@
+﻿@model FitnessTrainer.ViewModels.RegisterViewModel
+
+<div class="row justify-content-center">
+    <div class="col-5">
+        <h1>Реєстрація</h1>
+
+        <form asp-controller="Admin" asp-action="Register" method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="form-floating mb-3">
+                <label for="floatingInput">Логін</label>
+                <input asp-for="UserName" class="form-control" id="floatingInput" />
+            </div>
+            <div class="form-floating">
+                <label for="floatingPassword">Пароль</label>
+                <input asp-for="Password" type="password" class="form-control" id="floatingPassword">
+            </div>
+            <div class="form-floating">
+                <label for="floatingPassword">Підтвердження паролю</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" id="floatingPassword">
+            </div>
+            <br />
+            <div>
+                <input class="btn btn-primary" type="submit" value="Зареєструватися" />
+            </div>
+        </form>
+    </div>
+</div>

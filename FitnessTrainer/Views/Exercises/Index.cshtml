@@ -1,0 +1,68 @@
+﻿@model IEnumerable<FitnessTrainer.DomainEntities.Entity.Exercise>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Список вправ</h1>
+
+<div class="container my-4">
+    <div class="row justify-content-between">
+        <div class="col-8">
+            <form class="form-inline" asp-controller="Exercises" asp-action="Index">
+                <input class="form-control mr-1" name="searchString" type="search" placeholder="Пошук" aria-label="Поиск" value="@ViewData["CurrentFilter"]" />
+                <button class="btn btn-outline-success my-2" type="submit">Шукати</button>
+            </form>
+        </div>
+        <div class="col-3 text-right">
+            <a class="btn btn-outline-primary" asp-action="Create">Додати вправу</a>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="d-none d-sm-table-cell">
+                @Html.DisplayNameFor(model => model.NumberOfApproaches)
+            </th>
+            <th class="d-none d-sm-table-cell">
+                @Html.DisplayNameFor(model => model.NumberOfRepetitions)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/images/@item.ImagePath"
+                         class="img-thumbnail"
+                         height="100" width="100"
+                         asp-append-version="true" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Name)
+                </td>
+                <td class="d-none d-sm-table-cell">
+                    @Html.DisplayFor(modelitem => item.NumberOfApproaches)
+                </td>
+                <td class="d-none d-sm-table-cell">
+                    @Html.DisplayFor(modelitem => item.NumberOfRepetitions)
+                </td>
+                <td class="p-2">
+                    <div class="row mb-1"><a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Змінити</a></div>
+                    <div class="row mb-1"><a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Переглянути</a></div>
+                    <div class="row"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Видалити</a></div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

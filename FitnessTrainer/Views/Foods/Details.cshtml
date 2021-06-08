@@ -1,0 +1,50 @@
+﻿@model FitnessTrainer.DomainEntities.Entity.Food
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Інформація</h1>
+
+<div>
+    <h4>Продукт</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Calories)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Calories)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Proteins)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Proteins)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Fats)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Fats)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Carbohydrates)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Carbohydrates)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
+</div>
+<br />
+<hr />
+<a class="btn btn-link" asp-action="Index">< Повернутися до списку продуктів</a>

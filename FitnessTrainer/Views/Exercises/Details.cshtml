@@ -1,0 +1,71 @@
+﻿@model FitnessTrainer.DomainEntities.Entity.Exercise
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Інформація</h1>
+
+<div>
+    <h4>Вправа</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.ImagePath)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+        <dd class="col-sm-8">
+            <img src="~/images/@Model.ImagePath"
+                 class="img-thumbnail"
+                 height="100" width="100"
+                 asp-append-version="true" />
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NumberOfApproaches)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.NumberOfApproaches)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NumberOfRepetitions)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.NumberOfRepetitions)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TimeBetweenSets)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.TimeBetweenSets)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.RestTimeAtTheEnd)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.RestTimeAtTheEnd)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
+</div>
+<hr />
+<br />
+<a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
