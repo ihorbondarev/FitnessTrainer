@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FitnessTrainer.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessTrainer.Services
 {
@@ -38,6 +39,10 @@ namespace FitnessTrainer.Services
         public async Task<FoodViewModel> GetFoodById(int? id)
         {
             Food food = _context.Foods.FirstOrDefault(m => m.Id == id);
+            if(food == null)
+            {
+                return null;
+            }
             FoodViewModel model = new FoodViewModel()
             {
                 Id = food.Id,

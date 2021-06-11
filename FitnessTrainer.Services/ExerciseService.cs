@@ -16,7 +16,6 @@ namespace FitnessTrainer.Services
     public class ExerciseService : IExerciseService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment webHostEnvironment;
 
         public ExerciseService(ApplicationDbContext context)
         {
@@ -63,6 +62,10 @@ namespace FitnessTrainer.Services
         public async Task<ExerciseViewModel> GetExerciseById(int? id)
         {
             Exercise ex = _context.Exercises.Find(id);
+            if (ex == null)
+            {
+                return null;
+            }
             ExerciseViewModel model = new ExerciseViewModel()
             {
                 Id = ex.Id,
@@ -110,17 +113,34 @@ namespace FitnessTrainer.Services
         }
         public async Task CreateExercise(ExerciseViewModel model, string uniqueFileName)
         {
-            Exercise exercise = new Exercise()
+            Exercise exercise = new Exercise();
+            if (model.Id != null)
             {
-                Name = model.Name,
-                ImagePath = uniqueFileName,
-                Description = model.Description,
-                NumberOfApproaches = model.NumberOfApproaches,
-                NumberOfRepetitions = model.NumberOfRepetitions,
-                TimeBetweenSets = model.TimeBetweenSets,
-                RestTimeAtTheEnd = model.RestTimeAtTheEnd
-            };
-
+                exercise = new Exercise()
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    ImagePath = uniqueFileName,
+                    Description = model.Description,
+                    NumberOfApproaches = model.NumberOfApproaches,
+                    NumberOfRepetitions = model.NumberOfRepetitions,
+                    TimeBetweenSets = model.TimeBetweenSets,
+                    RestTimeAtTheEnd = model.RestTimeAtTheEnd
+                };
+            } else
+            {
+                exercise = new Exercise()
+                {
+                    Name = model.Name,
+                    ImagePath = uniqueFileName,
+                    Description = model.Description,
+                    NumberOfApproaches = model.NumberOfApproaches,
+                    NumberOfRepetitions = model.NumberOfRepetitions,
+                    TimeBetweenSets = model.TimeBetweenSets,
+                    RestTimeAtTheEnd = model.RestTimeAtTheEnd
+                };
+            }
+            
             _context.Add(exercise);
             await _context.SaveChangesAsync();
         }
