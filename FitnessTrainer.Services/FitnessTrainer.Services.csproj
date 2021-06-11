@@ -1,17 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\FitnessTrainer.DataAccess\FitnessTrainer.DataAccess.csproj" />
     <ProjectReference Include="..\FitnessTrainer.DomainEntities\FitnessTrainer.DomainEntities.csproj" />
     <ProjectReference Include="..\FitnessTrainer.ViewModels\FitnessTrainer.ViewModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

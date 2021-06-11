@@ -7,15 +7,23 @@
 <h1>Інформація</h1>
 
 <div>
-    <h4>План тренувальних вправ</h4>
+    <h4>План тренувальних вправ: @Model.Name</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2 mt-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.ImagePath)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        @if (Model.ImagePathString != null)
+        {
+            <dd class="col-sm-10">
+                <img src="~/images/@Model.ImagePathString"
+                     class="rounded" height="120" width="120"
+                     asp-append-version="true" />
+            </dd>
+        } else
+            {
+                <dd>Зображення немає</dd>
+            }
         <dt class="col-sm-2 mt-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -23,22 +31,11 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class="col-sm-2 mt-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
+            @Html.DisplayNameFor(model => model.ImagePathString)
         </dt>
         <dd class="col-sm-10">
-            @ViewBag.ImageString
+            @Html.DisplayFor(model => model.ImagePathString)
         </dd>
-        <dt class="col-sm-2 mt-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        @if (ViewBag.ImageString != null)
-        {
-            <dd class="col-sm-10">
-                <img src="~/images/@ViewBag.ImageString"
-                     class="rounded" height="100" width="100"
-                     asp-append-version="true" />
-            </dd>
-        }
         <dt class="col-sm-2 mt-2">
             @Html.DisplayNameFor(model => model.Status)
         </dt>
@@ -50,6 +47,7 @@
             {
                 <hr />
                 <h4>Обраний список продуктів</h4>
+                <br />
                 <dl class="row">
                     <dt class="col-sm-2">
                         Назва
@@ -67,12 +65,13 @@
             } else
             {
                 <hr />
-                <h4>Список продуктів не обрано</h4>
+                <h4 class="text-warning">Список продуктів не обрано</h4>
             }
-    @if(ViewBag.Exercises != null)
+    @if(Model.Exercises != null)
             {
                 <hr />
                 <h4>Список тренувальних вправ</h4>
+                <br />
                 <table class="table">
                     <thead>
                         <tr>
@@ -84,7 +83,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in ViewBag.Exercises)
+                        @foreach (var item in Model.Exercises)
                         {
                             <tr>
                                 <td>
@@ -112,12 +111,12 @@
             } else
             {
                 <hr />
-                <h4>Тренувальні вправи відсутні</h4>
+                <h4 class="text-warning">Тренувальні вправи відсутні</h4>
             }
 </div>
 <div>
-    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
+    <a class="btn btn-outline-warning mt-5" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
 </div>
 <br />
 <hr />
-<a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
+<a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>

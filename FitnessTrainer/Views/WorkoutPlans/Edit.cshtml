@@ -13,7 +13,7 @@
         <form asp-action="Edit" method="post" enctype="multipart/form-data" asp-controller="WorkoutPlans">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" name="OldImagePath" value="@ViewBag.OldImagePath" />
+            <input type="hidden" name="OldImagePath" value="@Model.ImagePathString" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -164,7 +164,7 @@
 <br />
 <hr />
 <div>
-    <a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
+    <a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>
 </div>
 
 <div class="modal fade" id="recForFoodModal" tabindex="-1" aria-labelledby="recForFoodModalLabel" aria-hidden="true">

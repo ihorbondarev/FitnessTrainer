@@ -1,4 +1,4 @@
-﻿@model FitnessTrainer.DomainEntities.Entity.Exercise
+﻿@model FitnessTrainer.ViewModels.ExerciseViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,23 +7,17 @@
 <h1>Інформація</h1>
 
 <div>
-    <h4>Вправа</h4>
+    <h4>Вправа @Model.Name</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2 mb-4">
             @Html.DisplayNameFor(model => model.ImagePath)
         </dt>
         <dd class="col-sm-10">
-            <img src="~/images/@Model.ImagePath"
+            <img src="~/images/@Model.ImagePathString"
                  class="rounded"
                  height="200"
                  asp-append-version="true" />
-        </dd>
-        <dt class="col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-3 col-4 mb-4">
             @Html.DisplayNameFor(model => model.NumberOfApproaches)
@@ -50,10 +44,10 @@
             @Html.DisplayFor(model => model.RestTimeAtTheEnd)
         </dd>
         <dt class="col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.ImagePath)
+            @Html.DisplayNameFor(model => model.ImagePathString)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
+            @Html.DisplayFor(model => model.ImagePathString)
         </dd>
         <dt class="col-sm-2 mb-4">
             @Html.DisplayNameFor(model => model.Description)
@@ -68,4 +62,4 @@
 </div>
 <hr />
 <br />
-<a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
+<a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>

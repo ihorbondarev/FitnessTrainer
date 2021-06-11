@@ -1,4 +1,4 @@
-﻿@model FitnessTrainer.DomainEntities.Entity.Food
+﻿@model FitnessTrainer.ViewModels.FoodViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -42,7 +42,7 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Видалити" class="btn btn-outline-danger" />
         
@@ -50,4 +50,4 @@
 </div>
 <br />
 <hr />
-<a class="btn btn-link" asp-action="Index">< Повернутися до списку продуктів</a>
+<a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку продуктів</a>

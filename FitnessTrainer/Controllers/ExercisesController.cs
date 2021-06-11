@@ -13,6 +13,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using FitnessTrainer.ViewModels;
 using X.PagedList;
+using FitnessTrainer.Services.Interfaces;
 
 namespace FitnessTrainer.Controllers
 {
@@ -21,11 +22,13 @@ namespace FitnessTrainer.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IExerciseService _exerciseService;
 
-        public ExercisesController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
+        public ExercisesController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment, IExerciseService exerciseService)
         {
             _context = context;
             webHostEnvironment = hostEnvironment;
+            _exerciseService = exerciseService;
         }
 
         // GET: Exercises
@@ -33,17 +36,12 @@ namespace FitnessTrainer.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
-            var exercises = from m in _context.Exercises select m;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                exercises = _context.Exercises.Where(s => s.Name.Contains(searchString));
-            }
-
+            List<ExerciseViewModel> model = await _exerciseService.GetExercises(searchString);
+            List<Exercise> list = await _exerciseService.GetExercisesInDomainFormat(searchString);
             int pageNumber = (page ?? 1);
-            ViewBag.exList = await exercises.ToPagedListAsync(pageNumber, pageSize);
+            ViewBag.exList = await list.ToPagedListAsync(pageNumber, pageSize);
 
-            return View(exercises);
+            return View(model);
         }
 
         // GET: Exercises/Details/5
@@ -54,14 +52,14 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            var exercise = await _context.Exercises
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (exercise == null)
+            ExerciseViewModel model = await _exerciseService.GetExerciseById(id);
+
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(exercise);
+            return View(model);
         }
 
         // GET: Exercises/Create
@@ -81,19 +79,7 @@ namespace FitnessTrainer.Controllers
             {
                 string uniqueFileName = UploadedFile(model);
 
-                Exercise exercise = new Exercise()
-                {
-                    Name = model.Name,
-                    ImagePath = uniqueFileName,
-                    Description = model.Description,
-                    NumberOfApproaches = model.NumberOfApproaches,
-                    NumberOfRepetitions = model.NumberOfRepetitions,
-                    TimeBetweenSets = model.TimeBetweenSets,
-                    RestTimeAtTheEnd = model.RestTimeAtTheEnd
-                };
-
-                _context.Add(exercise);
-                await _context.SaveChangesAsync();
+                await _exerciseService.CreateExercise(model, uniqueFileName);
                 return Redirect("/Exercises/Index");
             }
             return View(model);
@@ -107,12 +93,14 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            var exercise = await _context.Exercises.FindAsync(id);
-            if (exercise == null)
+            ExerciseViewModel model = await _exerciseService.GetExerciseById(id);
+
+
+            if (model == null)
             {
                 return NotFound();
             }
-            return View(exercise);
+            return View(model);
         }
 
         // POST: Exercises/Edit/5
@@ -137,32 +125,10 @@ namespace FitnessTrainer.Controllers
                     {
                         uniqueFileName = UploadedFile(model);
 
-                        Exercise exercise = new Exercise()
-                        {
-                            Id = model.Id,
-                            Name = model.Name,
-                            ImagePath = uniqueFileName,
-                            Description = model.Description,
-                            NumberOfApproaches = model.NumberOfApproaches,
-                            NumberOfRepetitions = model.NumberOfRepetitions,
-                            TimeBetweenSets = model.TimeBetweenSets,
-                            RestTimeAtTheEnd = model.RestTimeAtTheEnd
-                        };
-                        _context.Update(exercise);
+                        await _exerciseService.UpdateExercise(model, uniqueFileName);
                     } else
                     {
-                        Exercise exercise = new Exercise()
-                        {
-                            Id = model.Id,
-                            Name = model.Name,
-                            ImagePath = OldImagePath,
-                            Description = model.Description,
-                            NumberOfApproaches = model.NumberOfApproaches,
-                            NumberOfRepetitions = model.NumberOfRepetitions,
-                            TimeBetweenSets = model.TimeBetweenSets,
-                            RestTimeAtTheEnd = model.RestTimeAtTheEnd
-                        };
-                        _context.Update(exercise);
+                        await _exerciseService.UpdateExerciseWithOldImage(model, OldImagePath);
                     }
                     
                     await _context.SaveChangesAsync();
@@ -191,14 +157,14 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            var exercise = await _context.Exercises
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (exercise == null)
+            ExerciseViewModel model = await _exerciseService.GetExerciseById(id);
+
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(exercise);
+            return View(model);
         }
 
         // POST: Exercises/Delete/5
@@ -206,9 +172,7 @@ namespace FitnessTrainer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var exercise = await _context.Exercises.FindAsync(id);
-            _context.Exercises.Remove(exercise);
-            await _context.SaveChangesAsync();
+            await _exerciseService.DeleteExercise(id);
             return RedirectToAction(nameof(Index));
         }
 

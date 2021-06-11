@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FitnessTrainer.DomainEntities.Entity.RecForFood>
+﻿@model IEnumerable<FitnessTrainer.ViewModels.RecForFoodViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -36,7 +36,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.recsList)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>

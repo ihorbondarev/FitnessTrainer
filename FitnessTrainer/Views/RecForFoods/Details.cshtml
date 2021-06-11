@@ -34,7 +34,7 @@
 <div>
     <h4>Список продуктів</h4>
     <br />
-    @if(ViewBag.foodList != null)
+    @if(Model.Foods != null)
             {
                 <table class="table">
                     <thead>
@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in ViewBag.foodList)
+                        @foreach(var item in Model.Foods)
                 {
                         <tr>
                             <td>@item.Name</td>
@@ -67,4 +67,4 @@
 
 <br />
 <hr />
-<a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
+<a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>

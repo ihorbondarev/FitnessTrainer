@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.4" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FitnessTrainer.DataAccess\FitnessTrainer.DataAccess.csproj" />
+    <ProjectReference Include="..\FitnessTrainer.DomainEntities\FitnessTrainer.DomainEntities.csproj" />
+    <ProjectReference Include="..\FitnessTrainer.ViewModels\FitnessTrainer.ViewModels.csproj" />
+    <ProjectReference Include="..\FitnessTrainer\FitnessTrainer.csproj" />
+  </ItemGroup>
+
+</Project>

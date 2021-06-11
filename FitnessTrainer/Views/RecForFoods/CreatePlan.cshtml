@@ -1,4 +1,4 @@
-﻿@model FitnessTrainer.DomainEntities.Entity.RecForFood
+﻿@model FitnessTrainer.ViewModels.RecForFoodViewModel
 
 @{
     ViewData["Title"] = "CreatePlan";
@@ -31,7 +31,7 @@
 <hr />
 
 <div>
-    <a class="btn btn-link" asp-action="Index">< Повернутися до списку</a>
+    <a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>
 </div>
 
 @section Scripts {

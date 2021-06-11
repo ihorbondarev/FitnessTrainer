@@ -12,6 +12,8 @@ namespace FitnessTrainer.ViewModels
         public string Name { get; set; }
         [Display(Name = "Изображение")]
         public IFormFile ImagePath { get; set; }
+        [Display(Name = "Назва файлу")]
+        public string ImagePathString { get; set; }
         [Display(Name = "Описание")]
         public string? Description { get; set; }
         [Display(Name = "Кол. подходов")]

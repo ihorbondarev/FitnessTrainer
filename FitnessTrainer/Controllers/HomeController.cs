@@ -24,7 +24,7 @@ namespace FitnessTrainer.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         [AllowAnonymous]

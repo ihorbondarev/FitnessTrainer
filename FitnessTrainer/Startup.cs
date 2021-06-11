@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FitnessTrainer.Services.Interfaces;
+using FitnessTrainer.Services;
 using System;
 using System.Reflection;
 using System.IO;
@@ -50,6 +52,11 @@ namespace FitnessTrainer
             });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddTransient<IFoodService, FoodService>();
+            services.AddTransient<IRecForFoodService, RecForFoodService>();
+            services.AddTransient<IExerciseService, ExerciseService>();
+            services.AddTransient<IWorkoutPlanService, WorkoutPlanService>();
 
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();

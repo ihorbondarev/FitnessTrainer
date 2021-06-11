@@ -9,6 +9,7 @@ using FitnessTrainer.DataAccess.DbContexts;
 using FitnessTrainer.DomainEntities.Entity;
 using Microsoft.AspNetCore.Authorization;
 using FitnessTrainer.ViewModels;
+using FitnessTrainer.Services.Interfaces;
 using X.PagedList;
 
 namespace FitnessTrainer.Controllers
@@ -17,10 +18,12 @@ namespace FitnessTrainer.Controllers
     public class RecForFoodsController : Controller
     {
         private ApplicationDbContext _context;
+        private IRecForFoodService _recForFoodService;
 
-        public RecForFoodsController(ApplicationDbContext context)
+        public RecForFoodsController(ApplicationDbContext context, IRecForFoodService recForFoodService)
         {
             _context = context;
+            _recForFoodService = recForFoodService;
         }
 
         // GET: RecForFoods
@@ -28,17 +31,12 @@ namespace FitnessTrainer.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
-            var recForFoods = from m in _context.RecForFoods select m;
-
-            if(!String.IsNullOrEmpty(searchString))
-            {
-                recForFoods = recForFoods.Where(m => m.Name.Contains(searchString));
-            }
+            List<RecForFoodViewModel> recForFoodList = await _recForFoodService.GetRecForFoods(searchString);
 
             int pageNumber = (page ?? 1);
-            ViewBag.recsList = await recForFoods.ToPagedListAsync(pageNumber, pageSize);
+            ViewBag.recsList = await recForFoodList.ToPagedListAsync(pageNumber, pageSize);
 
-            return View(recForFoods);
+            return View(recForFoodList);
         }
 
         // GET: RecForFoods/Details/5
@@ -49,27 +47,11 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            var recForFood = await _context.RecForFoods.Include(c => c.Foods)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var model = await _recForFoodService.GetRecForFoodById(id);
 
-            if (recForFood == null)
+            if (model == null)
             {
                 return NotFound();
-            }
-
-            RecForFoodViewModel model = new RecForFoodViewModel()
-            {
-                Id = recForFood.Id,
-                Name = recForFood.Name,
-                Description = recForFood.Description
-            };
-
-            if(recForFood.Foods == null)
-            {
-                ViewBag.foodList = null;
-            } else
-            {
-                ViewBag.foodList = recForFood.Foods;
             }
 
             return View(model);
@@ -91,11 +73,11 @@ namespace FitnessTrainer.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(recForFood);
-                await _context.SaveChangesAsync();
+                await _recForFoodService.CreateRecForFood(recForFood);
                 return RedirectToAction(nameof(Index));
             }
-            return View(recForFood);
+            RecForFoodViewModel model = await _recForFoodService.RecForFoodIntoViewModel(recForFood);
+            return View(model);
         }
 
         // GET: RecForFoods/Edit/5
@@ -106,41 +88,12 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            RecForFood recForFood = _context.RecForFoods.Include(a => a.Foods).FirstOrDefault(x => x.Id == id);
+            RecForFoodViewModel model = await _recForFoodService.GetRecForFoodById(id);
 
-            if (recForFood == null)
+            if (model == null)
             {
                 return NotFound();
             }
-            
-            List<FoodViewModel> vv = new List<FoodViewModel>();
-
-            if (recForFood.Foods != null)
-            {
-                
-
-                foreach (var s in recForFood.Foods)
-                {
-                    FoodViewModel food = new FoodViewModel()
-                    {
-                        Id = s.Id,
-                        Name = s.Name,
-                        Calories = s.Calories,
-                        Fats = s.Fats,
-                        Carbohydrates = s.Carbohydrates,
-                        Proteins = s.Proteins
-                    };
-                    vv.Add(food);
-                }
-            }
-
-            RecForFoodViewModel model = new RecForFoodViewModel()
-            {
-                Id = recForFood.Id,
-                Name = recForFood.Name,
-                Description = recForFood.Description,
-                Foods = vv
-            };
 
             List<Food> foods = await _context.Foods.ToListAsync();
             ViewBag.foodList = foods;
@@ -164,8 +117,7 @@ namespace FitnessTrainer.Controllers
             {
                 try
                 {
-                    _context.Update(recForFood);
-                    await _context.SaveChangesAsync();
+                    await _recForFoodService.UpdateRecForFood(recForFood);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -180,7 +132,8 @@ namespace FitnessTrainer.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(recForFood);
+            RecForFoodViewModel model = await _recForFoodService.GetRecForFoodById(recForFood.Id);
+            return View(model);
         }
 
         // GET: RecForFoods/Delete/5
@@ -191,14 +144,13 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            var recForFood = await _context.RecForFoods
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (recForFood == null)
+            RecForFoodViewModel model = await _recForFoodService.GetRecForFoodById(id);
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(recForFood);
+            return View(model);
         }
 
         // POST: RecForFoods/Delete/5
@@ -206,9 +158,7 @@ namespace FitnessTrainer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var recForFood = await _context.RecForFoods.FindAsync(id);
-            _context.RecForFoods.Remove(recForFood);
-            await _context.SaveChangesAsync();
+            await _recForFoodService.DeleteRecForFood(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -218,36 +168,29 @@ namespace FitnessTrainer.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddFoodToPlan(int? planid, int? foodid)
+        public async Task<IActionResult> AddFoodToPlan(int? planid, int? foodid)
         {
             if(planid == null || foodid == null)
             {
                 BadRequest();
             }
 
-            RecForFood plan = _context.RecForFoods.FindAsync(planid).GetAwaiter().GetResult();
-
-            Food food = _context.Foods.FindAsync(foodid).GetAwaiter().GetResult();
-
-            plan.Foods.Add(food);
-            _context.SaveChanges();
+            await _recForFoodService.AddFoodToRecForFood(planid, foodid);
             string url = "Edit/" + planid;
 
             return Redirect(url);
         }
 
         [HttpPost]
-        public IActionResult DeleteFoodFromPlan(int? idplan, int? idfood)
+        public async Task<IActionResult> DeleteFoodFromPlan(int? idplan, int? idfood)
         {
             int foodid = idfood ?? 0;
             if(foodid == 0)
             {
                 return NotFound();
             }
-            RecForFood rec = _context.RecForFoods.Include(c => c.Foods).FirstOrDefault(i => i.Id == idplan);
-            Food del = _context.Foods.Find(foodid);
-            rec.Foods.Remove(del);
-            _context.SaveChanges();
+
+            await _recForFoodService.DeleteFoodFromRecForFood(idplan, idfood);
 
             string url = "Edit/" + idplan;
 

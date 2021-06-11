@@ -12,6 +12,7 @@ using FitnessTrainer.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using X.PagedList;
+using FitnessTrainer.Services.Interfaces;
 
 namespace FitnessTrainer.Controllers
 {
@@ -20,25 +21,21 @@ namespace FitnessTrainer.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IWorkoutPlanService _workoutPlanService;
 
-        public WorkoutPlansController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
+        public WorkoutPlansController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment, IWorkoutPlanService workoutPlanService)
         {
             _context = context;
             webHostEnvironment = hostEnvironment;
+            _workoutPlanService = workoutPlanService;
         }
 
         // GET: WorkoutPlans
-        public IActionResult Index(string searchString, int? page, int pageSize = 5)
+        public async Task<IActionResult> Index(string searchString, int? page, int pageSize = 5)
         {
             ViewData["CurrentFilter"] = searchString;
-            List<WorkoutPlan> plans;
-            if (string.IsNullOrEmpty(searchString))
-            {
-                plans = _context.WorkoutPlans.ToList();
-            } else
-            {
-                plans = _context.WorkoutPlans.Where(s => s.Name.Contains(searchString)).ToList();
-            }
+
+            List<WorkoutPlan> plans = await _workoutPlanService.GetWorkoutPlans(searchString);
 
             int pageNumber = (page ?? 1);
             ViewBag.workoutPlansList = plans.ToPagedList(pageNumber, pageSize);
@@ -54,28 +51,17 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            WorkoutPlan workoutPlan = await _context.WorkoutPlans.Include(c => c.Exercises).Include(s => s.RecForFood)
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            WorkoutPlanViewModel model = new WorkoutPlanViewModel()
-            {
-                Id = workoutPlan.Id,
-                Name = workoutPlan.Name,
-                Description = workoutPlan.Description,
-                Status = workoutPlan.Status,
-                RecForFood = workoutPlan.RecForFood
-            };
+            WorkoutPlanViewModel model = await _workoutPlanService.GetWorkoutPlanViewModelById(id);
 
 
-            if (workoutPlan == null)
+            if (model == null)
             {
                 return NotFound();
             }
 
-            List<Exercise> exlist = workoutPlan.Exercises;
+            List<Exercise> exlist = model.Exercises;
 
             ViewBag.Exercises = exlist;
-            ViewBag.ImageString = workoutPlan.ImagePath.ToString();
 
             return View(model);
         }
@@ -97,16 +83,8 @@ namespace FitnessTrainer.Controllers
             {
                 string uniqueFileName = UploadedFile(model);
 
-                WorkoutPlan plan = new WorkoutPlan()
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    ImagePath = uniqueFileName,
-                    Status = model.Status
-                };
+                await _workoutPlanService.CreateWorkoutPlan(model, uniqueFileName);
 
-                _context.Add(plan);
-                await _context.SaveChangesAsync();
                 return Redirect("/WorkoutPlans/Index");
             }
             return View(model);
@@ -120,52 +98,13 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            WorkoutPlan plan = _context.WorkoutPlans.Include(a => a.Exercises).Include(s => s.RecForFood).FirstOrDefault(x => x.Id == id);
-
-            if (plan == null)
-            {
-                return NotFound();
-            }
-
-            List<Exercise> ex = new List<Exercise>();
-
-            if(plan.Exercises != null)
-            {
-                foreach(var item in plan.Exercises)
-                {
-                    Exercise exvm = new Exercise()
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        ImagePath = item.ImagePath,
-                        NumberOfApproaches = item.NumberOfApproaches,
-                        NumberOfRepetitions = item.NumberOfRepetitions,
-                        Description = item.Description
-                    };
-                    ex.Add(exvm);
-                }
-            }
-
-            RecForFood rec = plan.RecForFood;
-
-            WorkoutPlanViewModel model = new WorkoutPlanViewModel()
-            {
-                Id = plan.Id,
-                Name = plan.Name,
-                Status = plan.Status,
-                Description = plan.Description,
-                Exercises = ex,
-                RecForFood = rec
-            };
-
-            string oldImagePath = plan.ImagePath;
+            WorkoutPlanViewModel model = await _workoutPlanService.GetWorkoutPlanViewModelById(id);
 
             List<RecForFood> recForFoodList = _context.RecForFoods.ToList();
             List<Exercise> exercisesList = _context.Exercises.ToList();
 
             ViewBag.RecForFoodList = recForFoodList;
             ViewBag.ExercisesList = exercisesList;
-            ViewBag.OldImagePath = oldImagePath;
 
             return View(model);
         }
@@ -192,32 +131,11 @@ namespace FitnessTrainer.Controllers
                     {
                         uniqueFileName = UploadedFile(model);
 
-                        WorkoutPlan plan = new WorkoutPlan()
-                        {
-                            Id = model.Id,
-                            Name = model.Name,
-                            Description = model.Description,
-                            Status = model.Status,
-                            Exercises = model.Exercises,
-                            RecForFood = model.RecForFood,
-                            ImagePath = uniqueFileName
-                        };
-                        _context.Update(plan);
+                        await _workoutPlanService.UpdateWorkoutPlan(model, uniqueFileName);
                     } else
                     {
-                        WorkoutPlan plan = new WorkoutPlan()
-                        {
-                            Id = model.Id,
-                            Name = model.Name,
-                            Description = model.Description,
-                            Status = model.Status,
-                            Exercises = model.Exercises,
-                            RecForFood = model.RecForFood,
-                            ImagePath = OldImagePath
-                        };
-                        _context.Update(plan);
+                        await _workoutPlanService.UpdateWorkoutPlanWithOldImage(model, OldImagePath);
                     }
-                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -243,14 +161,14 @@ namespace FitnessTrainer.Controllers
                 return NotFound();
             }
 
-            var workoutPlan = await _context.WorkoutPlans
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (workoutPlan == null)
+            WorkoutPlanViewModel model = await _workoutPlanService.GetWorkoutPlanViewModelById(id);
+            
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(workoutPlan);
+            return View(model);
         }
 
         // POST: WorkoutPlans/Delete/5
@@ -258,9 +176,7 @@ namespace FitnessTrainer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var workoutPlan = await _context.WorkoutPlans.FindAsync(id);
-            _context.WorkoutPlans.Remove(workoutPlan);
-            await _context.SaveChangesAsync();
+            await _workoutPlanService.DeleteWorkoutPlanById(id);
             return RedirectToAction(nameof(Index));
         }
 
