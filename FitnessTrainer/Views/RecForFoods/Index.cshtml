@@ -10,7 +10,7 @@
 
 <h1>Сторінка списків продуктів</h1>
 
-<div class="container my-4">
+<div class="container mt-4">
     <div class="row justify-content-between">
         <div class="col-8">
             <form class="form-inline" asp-controller="RecForFoods" asp-action="Index">
@@ -21,6 +21,15 @@
         <div class="col-4 text-right">
             <a class="btn btn-outline-primary" asp-action="CreatePlan">Додати план</a>
         </div>
+    </div>
+    <div class="row justify-content-end mt-3 mr-1">
+        @Html.PagedListPager((IPagedList)ViewBag.recsList, page => Url.Action("Index", new { page = page, searchString = @ViewData["CurrentFilter"] }), new PagedListRenderOptions
+{
+    LinkToFirstPageFormat = "<<",
+    LinkToLastPageFormat = ">>",
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new string[] { "page-link" }
+})
     </div>
 </div>
 <table class="table">
@@ -54,11 +63,3 @@
         }
     </tbody>
 </table>
-
-@Html.PagedListPager((IPagedList)ViewBag.recsList, page => Url.Action("Index", new { page = page, searchString = @ViewData["CurrentFilter"] }), new PagedListRenderOptions
-{
-    LinkToFirstPageFormat = "<<",
-    LinkToLastPageFormat = ">>",
-    LiElementClasses = new string[] { "page-item" },
-    PageClasses = new string[] { "page-link" }
-})

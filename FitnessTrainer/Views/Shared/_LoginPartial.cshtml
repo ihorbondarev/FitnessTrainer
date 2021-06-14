@@ -6,22 +6,22 @@
     @if (User.IsInRole("Administrator"))
     {
         <li class="nav-item">
-            <a class="nav-link text-light">Привіт, @User.Identity.Name!</a>
+            <a class="nav-link">Привіт, @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-controller="Admin" asp-action="Logout">
-                <button type="submit" class="nav-link btn btn-link text-light">Вийти</button>
+                <button type="submit" class="nav-link btn btn-link">Вийти</button>
             </form>
         </li>
     }
     else if (User.IsInRole("MobileUser"))
     {
         <li class="nav-item">
-            <a class="nav-link text-light">Привіт, @User.Identity.Name!</a>
+            <a class="nav-link">Привіт, @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-controller="Admin" asp-action="Logout">
-                <button type="submit" class="nav-link btn btn-link text-light">Вийти</button>
+                <button type="submit" class="nav-link btn btn-link">Вийти</button>
             </form>
         </li>
     }
@@ -31,7 +31,7 @@
             <a class="nav-link text-dark" asp-action="Register" asp-controller="Admin">Зареєструватися</a>
         </li>*@
         <li class="nav-item">
-            <a class="nav-link text-light" asp-controller="Admin" asp-action="Login">Увійти</a>
+            <a class="nav-link" asp-controller="Admin" asp-action="Login">Увійти</a>
         </li>
     }
 </ul>

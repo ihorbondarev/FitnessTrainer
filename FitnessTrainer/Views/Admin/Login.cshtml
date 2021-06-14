@@ -2,24 +2,22 @@
 
 
 <div class="row justify-content-center" style="margin-top: 10%;">
-    <div class="col-lg-4 col-md-5 col-sm-9 col-9">
-        <h1>Авторизація</h1>
+    <div class="shadow py-5 col-lg-4 col-md-5 col-sm-9 col-9">
+        <h1 class="text-center mb-5">Авторизація</h1>
 
         <form asp-controller="Admin" asp-action="Login" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating mb-3">
-                <label for="floatingInput">Логін</label>
-                <input asp-for="UserName" class="form-control" id="floatingInput" />
+            <div class="form-floating mb-4">
+                <input asp-for="UserName" class="form-control" id="floatingInput" placeholder="Логін" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
-            <div class="form-floating">
-                <label for="floatingPassword">Пароль</label>
-                <input asp-for="Password" type="password" class="form-control" id="floatingPassword">
+            <div class="form-floating mb-4">
+                <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Пароль">
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <br />
-            <div>
-                <input class="btn btn-primary" type="submit" value="Увійти" />
+            <div class="d-flex justify-content-center">
+                <input class="btn btn-outline-dark" type="submit" value="Увійти" />
             </div>
         </form>
     </div>

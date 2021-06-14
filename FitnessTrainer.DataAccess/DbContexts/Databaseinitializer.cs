@@ -6,7 +6,7 @@ namespace FitnessTrainer.DataAccess.DbContexts
     {
         public static void Init(IServiceProvider scopeServiceProvider)
         {
-            //---------------------------------------------------------------------------------------------------------------
+            #region initialDbCreating
             //var userManager = scopeServiceProvider.GetService<UserManager<ApplicationUser>>();
 
             //var user = new ApplicationUser
@@ -19,10 +19,10 @@ namespace FitnessTrainer.DataAccess.DbContexts
             //{
             //    userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Administrator")).GetAwaiter().GetResult();
             //}
-            //---------------------------------------------------------------------------------------------------------------
-
+            
             //context.Users.Add(user);
             //context.SaveChanges();
+            #endregion
         }
     }
 }

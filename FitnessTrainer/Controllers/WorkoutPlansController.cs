@@ -66,6 +66,7 @@ namespace FitnessTrainer.Controllers
             return View(model);
         }
 
+        #region CreatePlan
         // GET: WorkoutPlans/Create
         public IActionResult Create()
         {
@@ -89,6 +90,7 @@ namespace FitnessTrainer.Controllers
             }
             return View(model);
         }
+        #endregion
 
         // GET: WorkoutPlans/Edit/5
         public async Task<IActionResult> Edit(int? id)
