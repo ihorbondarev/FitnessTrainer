@@ -1,23 +1,24 @@
 ﻿@model FitnessTrainer.ViewModels.LoginViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <div class="row justify-content-center" style="margin-top: 10%;">
     <div class="shadow py-5 col-lg-4 col-md-5 col-sm-9 col-9">
-        <h1 class="text-center mb-5">Авторизація</h1>
+        <h1 class="text-center mb-5">@Localizer["FromHeader"]</h1>
 
         <form asp-controller="Admin" asp-action="Login" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating mb-4">
-                <input asp-for="UserName" class="form-control" id="floatingInput" placeholder="Логін" />
+                <input asp-for="UserName" class="form-control" id="floatingInput" placeholder="@Localizer["LoginPlaceholder"]" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-floating mb-4">
-                <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Пароль">
+                <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="@Localizer["PasswordPlaceholder"]">
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <br />
             <div class="d-flex justify-content-center">
-                <input class="btn btn-outline-dark" type="submit" value="Увійти" />
+                <input class="btn btn-outline-secondary" type="submit" value="@Localizer["LoginInput"]" />
             </div>
         </form>
     </div>

@@ -1,70 +1,63 @@
 ﻿@model FitnessTrainer.ViewModels.RecForFoodViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Інформація</h1>
-
-<div>
-    <h4>Список продуктів</h4>
-    <hr />
+<h1 class="mt-5">@Localizer["Header"]: @Model.Name</h1>
+<br />
+<div class="mt-5">
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            @Localizer["DietDescription"]
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
 </div>
 <div>
-    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">@Localizer["ButtonEdit"]</a>
 </div>
 <br />
 <hr />
 <br />
 
 <div>
-    <h4>Список продуктів</h4>
+    <h4>@Localizer["FoodListHeader"]</h4>
     <br />
-    @if(Model.Foods != null)
-            {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Назва</th>
-                            <th>Калорії</th>
-                            <th class="d-none d-sm-table-cell">Білки</th>
-                            <th class="d-none d-sm-table-cell">Жири</th>
-                            <th class="d-none d-sm-table-cell">Вуглеводи</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach(var item in Model.Foods)
+    @if (Model.Foods != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Localizer["TableFoodName"]</th>
+                    <th>@Localizer["TableFoodCalories"]</th>
+                    <th class="d-none d-sm-table-cell">@Localizer["TableFoodProteins"]</th>
+                    <th class="d-none d-sm-table-cell">@Localizer["TableFoodFats"]</th>
+                    <th class="d-none d-sm-table-cell">@Localizer["TableFoodCarbohydrates"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Foods)
                 {
-                        <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Calories</td>
-                            <td class="d-none d-sm-table-cell">@item.Proteins</td>
-                            <td class="d-none d-sm-table-cell">@item.Fats</td>
-                            <td class="d-none d-sm-table-cell">@item.Carbohydrates</td>
-                        </tr>
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Calories</td>
+                        <td class="d-none d-sm-table-cell">@item.Proteins</td>
+                        <td class="d-none d-sm-table-cell">@item.Fats</td>
+                        <td class="d-none d-sm-table-cell">@item.Carbohydrates</td>
+                    </tr>
                 }
-                    </tbody>
-                </table>
-            } else
-            {
-                <h4>Продукти не задані</h4>
-            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+<h4>@Localizer["HeaderFoodEmpity"]</h4>
+    }
 </div>
 
 <br />
-<hr />
-<a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>
+<a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>

@@ -7,6 +7,8 @@ using FitnessTrainer.ViewModels;
 using System;
 using System.Security.Claims;
 using FitnessTrainer.DataAccess.DbContexts;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace FitnessTrainer.Controllers
 {
@@ -26,9 +28,21 @@ namespace FitnessTrainer.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+                );
+            return LocalRedirect(returnUrl);
+        }
 
         public IActionResult Index()
         {
+            ViewBag.NameOfActivePage = "AdminIndex";
             return View();
         }
 

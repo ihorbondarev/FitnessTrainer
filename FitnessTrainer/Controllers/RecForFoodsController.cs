@@ -35,7 +35,7 @@ namespace FitnessTrainer.Controllers
 
             int pageNumber = (page ?? 1);
             ViewBag.recsList = await recForFoodList.ToPagedListAsync(pageNumber, pageSize);
-
+            ViewBag.NameOfActivePage = "RecForFoodsIndex";
             return View(recForFoodList);
         }
 

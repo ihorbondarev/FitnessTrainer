@@ -1,36 +1,34 @@
 ﻿@model FitnessTrainer.ViewModels.RecForFoodViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Редагування</h1>
-
-<h4>Список продуктів</h4>
-<hr />
-<div class="row">
+<h1 class="mt-5">@Localizer["Header"]: @Model.Name</h1>
+<br />
+<div class="row mt-5">
     <div class="col-md-9 col-sm-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label class="control-label">@Localizer["DietName"]</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label class="control-label">@Localizer["DietDescription"]</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <label class="form-label mr-4">Додати продукти</label>
-                <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#foodModal">Додати продукти</button>
+                <button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#foodModal">@Localizer["AddFoodModalButton"]</button>
             </div>
             <hr />
             <div class="form-group">
-                <input type="submit" value="Змінити" class="btn btn-outline-primary" />
+                <input type="submit" value="@Localizer["EditDietButton"]" class="btn btn-outline-primary" />
             </div>
         </form>
     </div>
@@ -43,8 +41,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Назва</th>
-                        <th>Калорії</th>
+                        <th>@Localizer["FoodTableName"]</th>
+                        <th>@Localizer["FoodTableCalories"]</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -62,7 +60,7 @@
                                 <form method="post" asp-action="DeleteFoodFromPlan">
                                     <input type="hidden" value="@Model.Id" name="idplan" />
                                     <input type="hidden" value="@i.Id" name="idfood" />
-                                    <button type="submit" class="btn btn-outline-dark">Видалити</button>
+                                    <button type="submit" class="btn btn-outline-danger">@Localizer["FoodTableDeleteButton"]</button>
                                 </form>
                             </td>
                         </tr>
@@ -74,14 +72,14 @@
 </div>
 <br />
 <div>
-    <a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>
+    <a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>
 </div>
 
 <div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Список продуктів</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@Localizer["ModalFoodHeader"]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -91,10 +89,10 @@
                     <thead>
                         <tr>
                             <th>
-                                Назва
+                                @Localizer["FoodTableName"]
                             </th>
                             <th>
-                                Калорії
+                                @Localizer["FoodTableCalories"]
                             </th>
                             <th></th>
                         </tr>
@@ -113,7 +111,7 @@
                                     <form method="post" asp-action="AddFoodToPlan">
                                         <input type="hidden" value="@Model.Id" name="planid" />
                                         <input type="hidden" value="@s.Id" name="foodid" />
-                                        <button type="submit" class="btn btn-outline-dark">Додати</button>
+                                        <button type="submit" class="btn btn-outline-success">@Localizer["ModalFoodButtonAdd"]</button>
                                     </form>
                                 </th>
                             </tr>
@@ -122,7 +120,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрити</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">@Localizer["ModalCloseButton"]</button>
             </div>
         </div>
     </div>

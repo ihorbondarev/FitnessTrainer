@@ -18,6 +18,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace FitnessTrainer
 {
@@ -58,6 +61,25 @@ namespace FitnessTrainer
             services.AddTransient<IExerciseService, ExerciseService>();
             services.AddTransient<IWorkoutPlanService, WorkoutPlanService>();
 
+            #region inject localization
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddControllersWithViews()
+                .AddDataAnnotationsLocalization()
+                .AddViewLocalization();// добавляем локализацию представлений;
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("uk-UA")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+            #endregion
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -92,6 +114,18 @@ namespace FitnessTrainer
                 app.UseDeveloperExceptionPage();
             }
 
+            //var supportedCultures = new[]
+            //{
+            //    new CultureInfo("en"),
+            //    new CultureInfo("uk-UA")
+            //};
+            //app.UseRequestLocalization(new RequestLocalizationOptions
+            //{
+            //    DefaultRequestCulture = new RequestCulture("uk-UA"),
+            //    SupportedCultures = supportedCultures,
+            //    SupportedUICultures = supportedCultures
+            //});
+            app.UseRequestLocalization();
             app.UseStaticFiles();
 
             app.UseRouting();

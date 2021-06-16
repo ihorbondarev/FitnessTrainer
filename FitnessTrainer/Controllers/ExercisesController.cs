@@ -40,7 +40,7 @@ namespace FitnessTrainer.Controllers
             List<Exercise> list = await _exerciseService.GetExercisesInDomainFormat(searchString);
             int pageNumber = (page ?? 1);
             ViewBag.exList = await list.ToPagedListAsync(pageNumber, pageSize);
-
+            ViewBag.NameOfActivePage = "ExercisesIndex";
             return View(model);
         }
 

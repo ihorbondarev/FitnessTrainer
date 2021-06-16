@@ -39,7 +39,7 @@ namespace FitnessTrainer.Controllers
 
             int pageNumber = (page ?? 1);
             ViewBag.workoutPlansList = plans.ToPagedList(pageNumber, pageSize);
-
+            ViewBag.NameOfActivePage = "WorkoutPlansIndex";
             return View(plans);
         }
 

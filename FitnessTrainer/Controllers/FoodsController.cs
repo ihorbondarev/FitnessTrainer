@@ -34,7 +34,7 @@ namespace FitnessTrainer.Controllers
 
             int pageNumber = (page ?? 1);
             ViewBag.foodList = foods.ToPagedList(pageNumber, pageSize);
-
+            ViewBag.NameOfActivePage = "FoodsIndex";
             return View(foods);
         }
 

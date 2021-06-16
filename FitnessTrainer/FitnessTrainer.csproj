@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Localization.AspNetCore.TagHelpers" Version="0.6.0" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
@@ -27,7 +28,6 @@
     <ProjectReference Include="..\FitnessTrainer.DataAccess\FitnessTrainer.DataAccess.csproj" />
     <ProjectReference Include="..\FitnessTrainer.DomainEntities\FitnessTrainer.DomainEntities.csproj" />
     <ProjectReference Include="..\FitnessTrainer.Services\FitnessTrainer.Services.csproj" />
-    <ProjectReference Include="..\FitnessTrainer.ViewModels\FitnessTrainer.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

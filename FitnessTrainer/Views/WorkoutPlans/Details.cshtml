@@ -1,122 +1,116 @@
 ﻿@model FitnessTrainer.ViewModels.WorkoutPlanViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Інформація</h1>
+<h1 class="mt-5">@Localizer["Header"]: @Model.Name</h1>
+<br />
 
-<div>
-    <h4>План тренувальних вправ: @Model.Name</h4>
-    <hr />
+@if (Model.ImagePathString != null)
+{
+    <img src="~/images/@Model.ImagePathString"
+         class="rounded mt-5" height="200"
+         asp-append-version="true" />
+}
+<div class="mt-5">
     <dl class="row">
         <dt class="col-sm-2 mt-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        @if (Model.ImagePathString != null)
-        {
-            <dd class="col-sm-10">
-                <img src="~/images/@Model.ImagePathString"
-                     class="rounded" height="120" width="120"
-                     asp-append-version="true" />
-            </dd>
-        } else
-            {
-                <dd>Зображення немає</dd>
-            }
-        <dt class="col-sm-2 mt-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Localizer["Status"]
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Status)
         </dd>
         <dt class="col-sm-2 mt-2">
-            @Html.DisplayNameFor(model => model.ImagePathString)
+            @Localizer["ImagePathString"]
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ImagePathString)
         </dd>
         <dt class="col-sm-2 mt-2">
-            @Html.DisplayNameFor(model => model.Status)
+            @Localizer["Description"]
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Status)
+            @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
-    @if(Model.RecForFood != null)
-            {
-                <hr />
-                <h4>Обраний список продуктів</h4>
-                <br />
-                <dl class="row">
-                    <dt class="col-sm-2">
-                        Назва
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Model.RecForFood.Name
-                    </dd>
-                    <dt class="col-sm-2">
-                        Опис
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Model.RecForFood.Description
-                    </dd>
-                </dl>
-            } else
-            {
-                <hr />
-                <h4 class="text-warning">Список продуктів не обрано</h4>
-            }
-    @if(Model.Exercises != null)
-            {
-                <hr />
-                <h4>Список тренувальних вправ</h4>
-                <br />
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Зображення</th>
-                            <th>Назва</th>
-                            <th class="d-none d-md-table-cell">Опис</th>
-                            <th class="d-none d-md-table-cell">Кількість підходів</th>
-                            <th class="d-none d-md-table-cell">Кількість повторів</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Exercises)
-                        {
-                            <tr>
-                                <td>
-                                    <img src="~/images/@item.ImagePath"
-                                         class="rounded"
-                                         height="120" width="120"
-                                         asp-append-version="true" />
-                                </td>
-                                <td>
-                                    @item.Name
-                                </td>
-                                <td class="d-none d-md-table-cell">
-                                    @item.Description
-                                </td>
-                                <td class="d-none d-md-table-cell">
-                                    @item.NumberOfApproaches
-                                </td>
-                                <td class="d-none d-md-table-cell">
-                                    @item.NumberOfRepetitions
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            } else
-            {
-                <hr />
-                <h4 class="text-warning">Тренувальні вправи відсутні</h4>
-            }
+    @if (Model.RecForFood != null)
+    {
+        <hr />
+        <h4>@Localizer["DietListHeader"]</h4>
+        <br />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Localizer["DietName"]
+            </dt>
+            <dd class="col-sm-10">
+                @Model.RecForFood.Name
+            </dd>
+            <dt class="col-sm-2">
+                @Localizer["DietDescription"]
+            </dt>
+            <dd class="col-sm-10">
+                @Model.RecForFood.Description
+            </dd>
+        </dl>
+    }
+    else
+    {
+        <hr />
+        <h4 class="text-warning">@Localizer["DietEmpityMessage"]</h4>
+    }
+    @if (Model.Exercises != null)
+    {
+        <hr />
+        <h4>@Localizer["ExercisesListHeader"]</h4>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Localizer["ExerciseImage"]</th>
+                    <th>@Localizer["ExerciseName"]</th>
+                    <th class="d-none d-md-table-cell">@Localizer["ExerciseDesciption"]</th>
+                    <th class="d-none d-md-table-cell">@Localizer["ExerciseCountSets"]</th>
+                    <th class="d-none d-md-table-cell">@Localizer["ExerciseCountReps"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Exercises)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/images/@item.ImagePath"
+                                 class="rounded"
+                                 height="120" width="120"
+                                 asp-append-version="true" />
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            @item.Description
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            @item.NumberOfApproaches
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            @item.NumberOfRepetitions
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <hr />
+        <h4 class="text-warning">@Localizer["ExerciseListEmpityMessage"]</h4>
+    }
 </div>
+<hr />
 <div>
-    <a class="btn btn-outline-warning mt-5" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
+    <a class="btn btn-outline-warning mt-5" asp-action="Edit" asp-route-id="@Model.Id">@Localizer["ButtonEdit"]</a>
 </div>
 <br />
-<hr />
-<a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>
+<a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>

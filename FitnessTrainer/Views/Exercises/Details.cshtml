@@ -1,65 +1,62 @@
 ﻿@model FitnessTrainer.ViewModels.ExerciseViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Інформація</h1>
+<h1 class="mt-5">@Localizer["Header"]: @Model.Name</h1>
+<br />
 
-<div>
-    <h4>Вправа @Model.Name</h4>
-    <hr />
+<img src="~/images/@Model.ImagePathString"
+     class="rounded mt-5"
+     height="200"
+     asp-append-version="true" />
+
+<div class="mt-5">
     <dl class="row">
-        <dt class="col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        <dd class="col-sm-10">
-            <img src="~/images/@Model.ImagePathString"
-                 class="rounded"
-                 height="200"
-                 asp-append-version="true" />
-        </dd>
         <dt class="col-sm-3 col-4 mb-4">
-            @Html.DisplayNameFor(model => model.NumberOfApproaches)
+            @Localizer["NumberOfApproaches"]
         </dt>
         <dd class="col-sm-9 col-8">
             @Html.DisplayFor(model => model.NumberOfApproaches)
         </dd>
         <dt class="col-sm-3 col-4 mb-4">
-            @Html.DisplayNameFor(model => model.NumberOfRepetitions)
+            @Localizer["NumberOfRepetitions"]
         </dt>
         <dd class="col-sm-9 col-8">
             @Html.DisplayFor(model => model.NumberOfRepetitions)
         </dd>
         <dt class="col-sm-3 col-4 mb-4">
-            @Html.DisplayNameFor(model => model.TimeBetweenSets)
+            @Localizer["TimeBetweenSets"]
         </dt>
         <dd class="col-sm-9 col-8">
             @Html.DisplayFor(model => model.TimeBetweenSets)
         </dd>
         <dt class="col-sm-3 col-4 mb-4">
-            @Html.DisplayNameFor(model => model.RestTimeAtTheEnd)
+            @Localizer["RestTimeAtTheEnd"]
         </dt>
         <dd class="col-sm-9 col-8">
             @Html.DisplayFor(model => model.RestTimeAtTheEnd)
         </dd>
         <dt class="col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.ImagePathString)
+            @Localizer["ImagePathString"]
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ImagePathString)
         </dd>
         <dt class="col-sm-2 mb-4">
-            @Html.DisplayNameFor(model => model.Description)
+            @Localizer["Description"]
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
 </div>
-<div>
-    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
-</div>
 <hr />
+<div>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">@Localizer["ButtonEdit"]</a>
+</div>
 <br />
-<a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>
+<a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>

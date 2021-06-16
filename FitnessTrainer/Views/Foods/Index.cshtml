@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<FitnessTrainer.DomainEntities.Entity.Food>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Index";
@@ -8,18 +10,18 @@
 @using X.PagedList.Mvc.Core.Common;
 @using X.PagedList
 
-<h1>Список продуктів</h1>
-
-<div class="container mt-4">
+<h1 class="mt-5">@Localizer["Header"]</h1>
+<br />
+<div class="container mt-5">
     <div class="row justify-content-between">
         <div class="col-8">
             <form class="form-inline" asp-controller="Foods" asp-action="Index">
-                <input class="form-control mr-sm-2" name="searchString" type="search" placeholder="Пошук" aria-label="Поиск" value="@ViewData["CurrentFilter"]" />
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Шукати</button>
+                <input class="form-control mr-sm-2" name="searchString" type="search" placeholder="@Localizer["SearchPlaceholder"]" aria-label="Поиск" value="@ViewData["CurrentFilter"]" />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">@Localizer["SearchButton"]</button>
             </form>
         </div>
         <div class="col-4 text-right">
-            <a class="btn btn-outline-primary" asp-action="Create">Додати продукт</a>
+            <a class="btn btn-outline-primary" asp-action="Create">@Localizer["ButtonAddFood"]</a>
         </div>
     </div>
     <div class="row justify-content-end mt-3 mr-1">
@@ -32,23 +34,23 @@
 })
     </div>
 </div>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Localizer["TableFoodName"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Calories)
+                @Localizer["TableFoodCalories"]
             </th>
             <th class="d-none d-sm-table-cell">
-                @Html.DisplayNameFor(model => model.Proteins)
+                @Localizer["TableFoodProteins"]
             </th>
             <th class="d-none d-sm-table-cell">
-                @Html.DisplayNameFor(model => model.Fats)
+                @Localizer["TableFoodFats"]
             </th>
             <th class="d-none d-sm-table-cell">
-                @Html.DisplayNameFor(model => model.Carbohydrates)
+                @Localizer["TableFoodCarbohydrates"]
             </th>
             <th></th>
         </tr>
@@ -73,9 +75,9 @@
                     @item.Carbohydrates
                 </td>
                 <td class="p-2">
-                    <div class="row mb-1"><a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Змінити</a></div>
-                    <div class="row mb-1"><a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Переглянути</a></div>
-                    <div class="row"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Видалити</a></div>
+                    <div class="row mb-1"><a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">@Localizer["ItemEdit"]</a></div>
+                    <div class="row mb-1"><a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">@Localizer["ItemDetails"]</a></div>
+                    <div class="row"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">@Localizer["ItemDelete"]</a></div>
                 </td>
             </tr>
         }

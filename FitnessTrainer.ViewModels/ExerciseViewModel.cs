@@ -7,22 +7,22 @@ namespace FitnessTrainer.ViewModels
     public class ExerciseViewModel
     {
         public int Id { get; set; }
-        [Display(Name="Название")]
-        [Required]
+        [Required(ErrorMessage = "Поле обов'язкове для заповнення.")]
+        [Display(Name="Name")]
         public string Name { get; set; }
-        [Display(Name = "Изображение")]
+        [Display(Name = "Image")]
         public IFormFile ImagePath { get; set; }
-        [Display(Name = "Назва файлу")]
+        [Display(Name = "FileName")]
         public string ImagePathString { get; set; }
-        [Display(Name = "Описание")]
+        [Display(Name = "Description")]
         public string? Description { get; set; }
-        [Display(Name = "Кол. подходов")]
+        [Display(Name = "NumberOfApproaches")]
         public int? NumberOfApproaches { get; set; }
-        [Display(Name = "Кол. повторений")]
+        [Display(Name = "NumberOfRepetitions")]
         public int? NumberOfRepetitions { get; set; }
-        [Display(Name = "Отдых между подходами")]
+        [Display(Name = "TimeBetweenSets")]
         public TimeSpan? TimeBetweenSets { get; set; }
-        [Display(Name = "Отдых после упражнения")]
+        [Display(Name = "RestTimeAtTheEnd")]
         public TimeSpan? RestTimeAtTheEnd { get; set; }
     }
 }

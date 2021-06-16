@@ -1,1 +1,4 @@
-﻿<h1>Головна сторінка адміністратора</h1>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<h1>@Localizer["Header"]</h1>

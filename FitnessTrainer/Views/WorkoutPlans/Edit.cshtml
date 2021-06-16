@@ -1,39 +1,39 @@
 ﻿@model FitnessTrainer.ViewModels.WorkoutPlanViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Редагування</h1>
+<h1 class="mt-5">@Localizer["Header"]: @Model.Name</h1>
 
-<h4>План тренувальних вправ</h4>
-<hr />
-<div class="row">
+<br />
+<div class="row mt-5">
     <div class="col-md-9 col-sm-12">
         <form asp-action="Edit" method="post" enctype="multipart/form-data" asp-controller="WorkoutPlans">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" name="OldImagePath" value="@Model.ImagePathString" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label class="control-label">@Localizer["Name"]</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label class="control-label">@Localizer["Description"]</label>
                 <textarea asp-for="Description" class="form-control" rows="9"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
+                <label class="control-label">@Localizer["ImagePath"]</label>
                 <div class="custom-file">
                     <input asp-for="ImagePath" class="custom-file-input" type="file" id="customFile">
-                    <label class="custom-file-label" for="customFile" data-browse="Додати фото">Оберіть фото</label>
+                    <label class="custom-file-label" for="customFile" data-browse="@Localizer["ImageinputButton"]">@Localizer["ImageInputPlaceholder"]</label>
                 </div>
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
+                <label class="control-label">@Localizer["Status"]</label>
                 <select asp-for="Status" class="form-control">
                     @if (Model.Status == 0)
                     {
@@ -53,8 +53,7 @@
                 <br />
                 <hr />
                 <div class="form-group">
-                    <label class="form-label">Додати план харчування</label>
-                    <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#recForFoodModal">Додати план харчування</button>
+                    <button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#recForFoodModal">@Localizer["AddDietModalButton"]</button>
                 </div>
             }
             else
@@ -62,17 +61,16 @@
                 <br />
                 <hr />
                 <div class="form-group">
-                    <label class="form-label">Обраний харчування: <strong>@Model.RecForFood.Name</strong></label>
+                    <label class="form-label">@Localizer["CurrentDietHeader"]: <strong>@Model.RecForFood.Name</strong></label>
                 </div>
             }
             <br />
             <div class="form-group">
-                <label class="form-label">Додати вправи</label>
-                <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#exercisesModal">Додати вправи</button>
+                <button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#exercisesModal">@Localizer["AddExerciseModalButton"]</button>
             </div>
-            <br />
+            <hr />
             <div class="form-group">
-                <input type="submit" value="Змінити" class="btn btn-outline-primary" />
+                <input type="submit" value="@Localizer["EditButton"]" class="btn btn-outline-primary" />
             </div>
         </form>
     </div>
@@ -83,21 +81,22 @@
     <hr />
     <div class="row ml-2">
         <div>
-            <h4>План харчування</h4>
+            <h4>@Localizer["DietHeader"]</h4>
+            <br />
             <dl class="row">
                 <dt class="col-sm-2">
-                    Назва
+                    @Localizer["DietName"]
                 </dt>
                 <dd class="col-sm-10">@Model.RecForFood.Name</dd>
                 <dt class="col-sm-2">
-                    Опис
+                    @Localizer["DietDescription"]
                 </dt>
                 <dd class="col-sm-10">@Model.RecForFood.Description</dd>
             </dl>
         </div>
         <form method="post" asp-action="DeleteRecForFoodFromWorkoutPlan">
             <input type="hidden" value="@Model.Id" name="workoutplanid" />
-            <button type="submit" class="btn btn-outline-dark">Видалити</button>
+            <button type="submit" class="btn btn-outline-danger">@Localizer["DeleteDietButton"]</button>
         </form>
     </div>
 }
@@ -107,22 +106,22 @@
     <hr />
     <div class="row ml-2">
         <div>
-            <h4>Вправи</h4>
+            <h4>@Localizer["ExerciseHeader"]</h4>
             <br />
             <table class="table">
                 <thead>
                     <tr>
                         <th>
-                            Зображення
+                            @Localizer["ExerciseImage"]
                         </th>
                         <th>
-                            Назва
+                            @Localizer["ExerciseName"]
                         </th>
                         <th class="d-none d-sm-table-cell">
-                            Кількість підходів
+                            @Localizer["ExerciseCountOfApproaches"]
                         </th>
                         <th class="d-none d-sm-table-cell">
-                            Кількість повторів
+                            @Localizer["ExerciseCountOfRepetitions"]
                         </th>
                         <th></th>
                     </tr>
@@ -150,7 +149,7 @@
                                 <form method="post" asp-action="DeleteExerciseFromWorkoutPlan">
                                     <input type="hidden" value="@Model.Id" name="workoutplanid" />
                                     <input type="hidden" value="@item.Id" name="exerciseid" />
-                                    <button type="submit" class="btn btn-outline-dark">Видалити</button>
+                                    <button type="submit" class="btn btn-outline-danger">@Localizer["ExerciseDeleteButton"]</button>
                                 </form>
                             </td>
                         </tr>
@@ -162,16 +161,15 @@
 }
 
 <br />
-<hr />
 <div>
-    <a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>
+    <a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>
 </div>
 
 <div class="modal fade" id="recForFoodModal" tabindex="-1" aria-labelledby="recForFoodModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Список планів харчування</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@Localizer["ModalDietHeader"]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -181,10 +179,10 @@
                     <thead>
                         <tr>
                             <th>
-                                Назва
+                                @Localizer["DietName"]
                             </th>
                             <th>
-                                Опис
+                                @Localizer["DietDescription"]
                             </th>
                             <th></th>
                         </tr>
@@ -203,7 +201,7 @@
                                     <form method="post" asp-action="AddRecForFoodToWorkoutPlan">
                                         <input type="hidden" value="@Model.Id" name="workoutplanid" />
                                         <input type="hidden" value="@s.Id" name="recforfoodid" />
-                                        <button type="submit" class="btn btn-outline-dark">Додати</button>
+                                        <button type="submit" class="btn btn-outline-success">@Localizer["ModalDietAddButton"]</button>
                                     </form>
                                 </th>
                             </tr>
@@ -212,7 +210,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Закрити</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">@Localizer["ModalDietCloseButton"]</button>
             </div>
         </div>
     </div>
@@ -222,7 +220,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Список тренувальних вправ</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@Localizer["ModalExerciseHeader"]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -232,10 +230,10 @@
                     <thead>
                         <tr>
                             <th>
-                                Назва
+                                @Localizer["ExerciseName"]
                             </th>
                             <th>
-                                Опис
+                                @Localizer["Description"]
                             </th>
                             <th></th>
                         </tr>
@@ -254,7 +252,7 @@
                                     <form method="post" asp-action="AddExerciseToWorkoutPlan">
                                         <input type="hidden" value="@Model.Id" name="workoutplanid" />
                                         <input type="hidden" value="@s.Id" name="exerciseid" />
-                                        <button type="submit" class="btn btn-outline-dark">Додати</button>
+                                        <button type="submit" class="btn btn-outline-success">@Localizer["ModalExerciseAddButton"]</button>
                                     </form>
                                 </th>
                             </tr>
@@ -263,7 +261,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["ModalExerciseCloseButton"]</button>
             </div>
         </div>
     </div>
@@ -273,10 +271,10 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script type="text/javascript">
 
-    // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function () {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    });
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
     </script>
 }

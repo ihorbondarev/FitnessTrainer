@@ -1,52 +1,50 @@
 ﻿@model FitnessTrainer.ViewModels.FoodViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Додати</h1>
-
-<h4>Продукт</h4>
-<hr />
+<h1 class="mt-5">@Localizer["Header"]</h1>
+<br />
 <div class="row">
-    <div class="col-md-9 col-sm-12">
+    <div class="col-md-9 col-sm-12 mt-5">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label class="control-label">@Localizer["Name"]</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Calories" class="control-label"></label>
+                <label class="control-label">@Localizer["Calories"]</label>
                 <input asp-for="Calories" class="form-control" />
                 <span asp-validation-for="Calories" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Proteins" class="control-label"></label>
+                <label class="control-label">@Localizer["Proteins"]</label>
                 <input asp-for="Proteins" class="form-control" />
                 <span asp-validation-for="Proteins" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Fats" class="control-label"></label>
+                <label class="control-label">@Localizer["Fats"]</label>
                 <input asp-for="Fats" class="form-control" />
                 <span asp-validation-for="Fats" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Carbohydrates" class="control-label"></label>
+                <label class="control-label">@Localizer["Carbohydrates"]</label>
                 <input asp-for="Carbohydrates" class="form-control" />
                 <span asp-validation-for="Carbohydrates" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Додати" class="btn btn-outline-primary" />
+                <input type="submit" value="@Localizer["AddButton"]" class="btn btn-outline-primary" />
             </div>
         </form>
     </div>
 </div>
 <br />
-<hr />
 <div>
-    <a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку продуктів</a>
+    <a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>
 </div>
 
 @section Scripts {

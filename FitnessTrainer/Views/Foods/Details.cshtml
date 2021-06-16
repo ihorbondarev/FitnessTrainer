@@ -1,50 +1,43 @@
 ﻿@model FitnessTrainer.ViewModels.FoodViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Інформація</h1>
-
-<div>
-    <h4>Продукт</h4>
-    <hr />
+<h1 class="mt-5">@Localizer["Header"]: @Model.Name</h1>
+<br />
+<div class="mt-5">
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            @Localizer["Calories"]
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Calories)
-        </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Calories)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Proteins)
+        <dt class="col-sm-2">
+            @Localizer["Proteins"]
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Proteins)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fats)
+        <dt class="col-sm-2">
+            @Localizer["Fats"]
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Fats)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Carbohydrates)
+        <dt class="col-sm-2">
+            @Localizer["Carbohydrates"]
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Carbohydrates)
         </dd>
     </dl>
 </div>
+<hr />
 <div>
-    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">Змінити</a>
+    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@Model.Id">@Localizer["EditButton"]</a>
 </div>
 <br />
-<hr />
-<a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку продуктів</a>
+<a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>

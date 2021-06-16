@@ -1,76 +1,77 @@
 ﻿@model FitnessTrainer.ViewModels.ExerciseViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Редагування</h1>
-
-<h4>Вправа</h4>
-<hr />
+<h1 class="mt-5">@Localizer["Header"]: @Model.Name</h1>
+<br />
 <div class="row">
-    <div class="col-md-9 col-sm-12">
+    <div class="col-md-9 col-sm-12 mt-5">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" name="OldImagePath" value="@Model.ImagePathString" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label class="control-label">@Localizer["ExerciseName"]</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
+                <label class="control-label">@Localizer["Image"]</label>
                 <div class="custom-file">
                     <input asp-for="ImagePath" class="custom-file-input" type="file" id="customFile">
-                    <label class="custom-file-label" for="customFile" data-browse="Обрати файл">Додати фото</label>
+                    <label class="custom-file-label" for="customFile" data-browse="@Localizer["BrowseImage"]">@Localizer["BrowseLabel"]</label>
                 </div>
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label class="control-label">@Localizer["ExerciseDescription"]</label>
                 <textarea asp-for="Description" class="form-control" rows="10" style="min-height: 50px;"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumberOfApproaches" class="control-label"></label>
+                <label class="control-label">@Localizer["NumberOfApproaches"]</label>
                 <input asp-for="NumberOfApproaches" class="form-control" />
                 <span asp-validation-for="NumberOfApproaches" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumberOfRepetitions" class="control-label"></label>
+                <label class="control-label">@Localizer["NumberOfRepetitions"]</label>
                 <input asp-for="NumberOfRepetitions" class="form-control" />
                 <span asp-validation-for="NumberOfRepetitions" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TimeBetweenSets" class="control-label"></label>
+                <label class="control-label">@Localizer["TimeBetweenSets"]</label>
                 <input asp-for="TimeBetweenSets" class="form-control" type="time" />
                 <span asp-validation-for="TimeBetweenSets" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RestTimeAtTheEnd" class="control-label"></label>
-                <input asp-for="RestTimeAtTheEnd" class="form-control" type="time"/>
+                <label class="control-label">@Localizer["RestTimeAtTheEnd"]</label>
+                <input asp-for="RestTimeAtTheEnd" class="form-control" type="time" />
                 <span asp-validation-for="RestTimeAtTheEnd" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Змінити" class="btn btn-outline-primary" />
+                <input type="submit" value="@Localizer["EditButton"]" class="btn btn-outline-primary" />
             </div>
         </form>
     </div>
 </div>
-
+<br />
 <div>
-    <a class="btn btn-link" href="javascript:history.go(-1)">< Повернутися до списку</a>
+    <a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function () {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    });
-</script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 }

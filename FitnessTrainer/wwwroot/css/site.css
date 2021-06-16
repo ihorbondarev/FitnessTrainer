@@ -18,6 +18,14 @@ a {
   border-color: #1861ac;
 }
 
+select, option {
+    -webkit-appearance: none;
+}
+
+select, option:hover {
+    color: rgba(0,0,0,.5);
+}
+
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #1b6ec2;

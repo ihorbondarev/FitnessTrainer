@@ -1,9 +1,8 @@
 ﻿using FitnessTrainer.Services.Interfaces;
 using FitnessTrainer.DomainEntities.Entity;
-using FitnessTrainer.ViewModels;
 using FitnessTrainer.DataAccess.DbContexts;
-using FitnessTrainer;
 using System;
+using FitnessTrainer.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
 using System.Linq;
