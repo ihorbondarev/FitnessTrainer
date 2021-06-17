@@ -8,8 +8,8 @@ namespace FitnessTrainer.ViewModels
     public class RecForFoodViewModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "RequiredDietNameError")]
         [Display(Name = "Назва")]
-        [Required]
         public string Name { get; set; }
         [Display(Name = "Опис")]
         public string? Description { get; set; }

@@ -4,10 +4,10 @@ namespace FitnessTrainer.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Введіть логін.")]
+        [Required(ErrorMessage = "RequiredLoginError")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Введіть пароль.")]
+        [Required(ErrorMessage = "RequiredPasswordError")]
         public string Password { get; set; }
 
         //[Required]

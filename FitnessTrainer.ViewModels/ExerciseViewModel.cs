@@ -7,7 +7,7 @@ namespace FitnessTrainer.ViewModels
     public class ExerciseViewModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення.")]
+        [Required(ErrorMessage = "RequiredExerciseNameError")]
         [Display(Name="Name")]
         public string Name { get; set; }
         [Display(Name = "Image")]

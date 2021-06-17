@@ -9,6 +9,7 @@ using System.Security.Claims;
 using FitnessTrainer.DataAccess.DbContexts;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 
 namespace FitnessTrainer.Controllers
 {
@@ -18,15 +19,18 @@ namespace FitnessTrainer.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _context;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
         public AdminController(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _localizer = localizer;
         }
         [HttpPost]
         [AllowAnonymous]
@@ -113,7 +117,7 @@ namespace FitnessTrainer.Controllers
 
             if(user == null)
             {
-                ModelState.AddModelError("", "Користувача з логіном " + model.UserName + " не знайдено");
+                ModelState.AddModelError("", _localizer["UserNotFoundError"]);
                 return View(model);
             } else if(await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -132,7 +136,7 @@ namespace FitnessTrainer.Controllers
                 }
             } else
             {
-                ModelState.AddModelError("", "Невірний пароль");
+                ModelState.AddModelError("", _localizer["WrongPasswordError"]);
                 return View(model);
             }
 

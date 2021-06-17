@@ -64,7 +64,10 @@ namespace FitnessTrainer
             #region inject localization
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews()
-                .AddDataAnnotationsLocalization()
+                .AddDataAnnotationsLocalization(options => {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                        factory.Create(typeof(SharedResource));
+                })
                 .AddViewLocalization();// добавляем локализацию представлений;
 
             services.Configure<RequestLocalizationOptions>(options =>

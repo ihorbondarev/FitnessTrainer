@@ -9,7 +9,7 @@ namespace FitnessTrainer.ViewModels
     public class FoodViewModel
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "RequiredFoodNameError")]
         [Display(Name = "Назва")]
         public string Name { get; set; }
         [Display(Name = "Калорії")]

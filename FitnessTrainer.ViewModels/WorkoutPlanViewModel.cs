@@ -8,7 +8,7 @@ namespace FitnessTrainer.ViewModels
     public class WorkoutPlanViewModel
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "RequiredWorkoutPlanNameError")]
         [Display(Name = "Назва")]
         public string Name { get; set; }
         [Display(Name = "Опис")]
