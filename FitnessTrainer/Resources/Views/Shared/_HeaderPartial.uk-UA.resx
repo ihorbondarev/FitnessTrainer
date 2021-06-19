@@ -127,7 +127,13 @@
     <value>Продукти</value>
   </data>
   <data name="RecForFoods" xml:space="preserve">
-    <value>Харчування</value>
+    <value>Раціони</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Головна</value>
+  </data>
+  <data name="UserPlans" xml:space="preserve">
+    <value>Плани тренувань</value>
   </data>
   <data name="WorkoutPlans" xml:space="preserve">
     <value>Плани тренувань</value>

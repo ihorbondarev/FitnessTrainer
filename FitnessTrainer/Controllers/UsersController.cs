@@ -1,143 +1,166 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FitnessTrainer.DataAccess.DbContexts;
+﻿using System.Threading.Tasks;
 using FitnessTrainer.DomainEntities.Entity;
-using FitnessTrainer.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using FitnessTrainer.ViewModels;
+using System;
 using System.Security.Claims;
+using FitnessTrainer.DataAccess.DbContexts;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
+using FitnessTrainer.Services.Interfaces;
+using X.PagedList;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessTrainer.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    [Authorize(Policy = "MobileUser")]
+    public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _context;
+        private readonly IStringLocalizer<SharedResource> _localizer;
+        private readonly IUserService _userService;
+        private readonly IWorkoutPlanService _workoutService;
 
-        public UsersController(ApplicationDbContext context,
+        public UsersController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context,
+            IStringLocalizer<SharedResource> localizer,
+            IUserService userService,
+            IWorkoutPlanService workoutService
+            )
         {
             _context = context;
-            _userManager = userManager;
+            _localizer = localizer;
             _signInManager = signInManager;
+            _userManager = userManager;
+            _userService = userService;
+            _workoutService = workoutService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<RegisterViewModel>> Register(RegisterViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (ModelState.IsValid)
-            {
-                ApplicationUser user = new ApplicationUser
-                {
-                    UserName = model.UserName,
-                };
-
-                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "MobileUser"));
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            return Ok();
-        }
-
-        // GET: api/ApplicationUsers
         [HttpGet]
-        public async Task<ActionResult<ApplicationUser>> GetUser(ApplicationUser user)
+        public async Task<IActionResult> Index()
         {
-            ApplicationUser model = await _context.ApplicationUsers.FindAsync(user.Id);
-            
-            if(model == null)
+            //Guid userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ApplicationUser newuser = await _userManager.GetUserAsync(User);
+            UserViewModel model = await _userService.GetUserViewModelById(newuser.Id);
+            ViewBag.NameOfActivePage = "UserIndex";
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserPlans(string searchString, int? page, int pageSize = 5)
+        {
+            ViewData["CurrentFilter"] = searchString;
+
+            List<WorkoutPlan> plans = await _workoutService.GetWorkoutPlans(searchString);
+
+            int pageNumber = (page ?? 1);
+            ViewBag.workoutPlansList = plans.ToPagedList(pageNumber, pageSize);
+            ViewBag.NameOfActivePage = "UserPlans";
+
+
+            return View(plans);
+        }
+
+
+        public async Task<IActionResult> AddWorkoutPlanToUserPlans(int? id)
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            var result = await _userService.AddWorkoutPlanToUserPlans(user.Id, id);
+
+            if (!result)
+            {
+                return RedirectToAction("GetSubscription", "Users");
+            }
+
+            return RedirectToAction("Index", "Users");
+        }
+
+        public async Task<IActionResult> GetSubscription()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> DeletePlanFromUsersPlans(int? id)
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            var result = await _userService.DeletePlanFromUsersPlans(user.Id, id);
+
+            if (!result)
             {
                 return NotFound();
-            } else
-            {
-                return model;
             }
+
+            return RedirectToAction("Index", "Users");
         }
 
-        // GET: api/ApplicationUsers/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<ApplicationUser>> GetApplicationUser(Guid id)
-        //{
-        //    var applicationUser = await _context.ApplicationUsers.FindAsync(id);
-
-        //    if (applicationUser == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return applicationUser;
-        //}
-
-        // PUT: api/ApplicationUsers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutApplicationUser(Guid id, ApplicationUser applicationUser)
+        public async Task<IActionResult> ApplyPremiumStatus()
         {
-            if (id != applicationUser.Id)
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            var result = await _userService.ApplyPremiumStatusForUser(user.Id);
+
+            if (!result)
             {
                 return BadRequest();
             }
 
-            _context.Entry(applicationUser).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ApplicationUserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return RedirectToAction("SuccessGetPremiumSubscription", "Users");
         }
 
-        // DELETE: api/ApplicationUsers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteApplicationUser(Guid id)
+        public async Task<IActionResult> SuccessGetPremiumSubscription()
         {
-            var applicationUser = await _context.ApplicationUsers.FindAsync(id);
-            if (applicationUser == null)
+            return View();
+        }
+
+        public async Task<IActionResult> UserPlanDetails(int? id)
+        {
+            if(id == null)
             {
                 return NotFound();
             }
 
-            _context.ApplicationUsers.Remove(applicationUser);
-            await _context.SaveChangesAsync();
+            WorkoutPlanViewModel plan = await _workoutService.GetWorkoutPlanViewModelById(id);
 
-            return NoContent();
+            if(plan == null)
+            {
+                return NotFound();
+            }
+
+            List<Exercise> exlist = plan.Exercises;
+
+            ViewBag.Exercises = exlist;
+
+            return View(plan);
         }
 
-        private bool ApplicationUserExists(Guid id)
+        public async Task<IActionResult> EditUserProfile(Guid? userid)
         {
-            return _context.ApplicationUsers.Any(e => e.Id == id);
+            UserViewModel user = await _userService.GetUserViewModelById(userid);
+            return View(user);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditUserProfile([Bind("Id, Age, Weight, Height")] ApplicationUser user)
+        {
+            if(user.Id == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _userService.EditUserProfile(user);
+            }
+
+            var model = await _userService.GetUserViewModelById(user.Id);
+
+            return RedirectToAction("Index", "Users");
         }
     }
 }

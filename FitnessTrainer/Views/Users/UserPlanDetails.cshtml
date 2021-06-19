@@ -1,0 +1,116 @@
+﻿@model FitnessTrainer.ViewModels.WorkoutPlanViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="mt-5">@Localizer["Header"]: @Model.Name</h1>
+<br />
+
+@if (Model.ImagePathString != null)
+{
+    <img src="~/images/@Model.ImagePathString"
+         class="rounded mt-5" height="200"
+         asp-append-version="true" />
+}
+<div class="mt-5">
+    <dl class="row">
+        <dt class="col-sm-2 mt-2">
+            @Localizer["Status"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2 mt-2">
+            @Localizer["ImagePathString"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ImagePathString)
+        </dd>
+        <dt class="col-sm-2 mt-2">
+            @Localizer["Description"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    @if (Model.RecForFood != null)
+    {
+        <hr />
+        <h4>@Localizer["DietListHeader"]</h4>
+        <br />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Localizer["DietName"]
+            </dt>
+            <dd class="col-sm-10">
+                @Model.RecForFood.Name
+            </dd>
+            <dt class="col-sm-2">
+                @Localizer["DietDescription"]
+            </dt>
+            <dd class="col-sm-10">
+                @Model.RecForFood.Description
+            </dd>
+        </dl>
+    }
+    else
+    {
+        <hr />
+        <h4 class="text-warning">@Localizer["DietEmpityMessage"]</h4>
+    }
+    @if (Model.Exercises.Count > 0)
+    {
+        <hr />
+        <h4>@Localizer["ExercisesListHeader"]</h4>
+        <br />
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>@Localizer["ExerciseImage"]</th>
+                    <th>@Localizer["ExerciseName"]</th>
+                    <th class="d-none d-md-table-cell">@Localizer["ExerciseDesciption"]</th>
+                    <th class="d-none d-md-table-cell">@Localizer["ExerciseCountSets"]</th>
+                    <th class="d-none d-md-table-cell">@Localizer["ExerciseCountReps"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Exercises)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/images/@item.ImagePath"
+                                 class="rounded"
+                                 height="120" width="120"
+                                 asp-append-version="true" />
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            @item.Description
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            @item.NumberOfApproaches
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            @item.NumberOfRepetitions
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <hr />
+        <h4 class="text-warning">@Localizer["ExerciseListEmpityMessage"]</h4>
+    }
+</div>
+<hr />
+<div>
+    <a class="btn btn-outline-warning mt-5" asp-action="DeletePlanFromUsersPlans" asp-route-id="@Model.Id">@Localizer["ButtonDeletePlanFromUserPlans"]</a>
+</div>
+<br />
+<a class="btn btn-link" asp-action="Index">@Localizer["BackLink"]</a>

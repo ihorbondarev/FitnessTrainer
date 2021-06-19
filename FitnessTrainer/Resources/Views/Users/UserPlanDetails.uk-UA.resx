@@ -117,16 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HelloUserString" xml:space="preserve">
-    <value>Привіт</value>
+  <data name="BackLink" xml:space="preserve">
+    <value>&lt; Повернутися до списку планів</value>
   </data>
-  <data name="LoginLink" xml:space="preserve">
-    <value>Увійти</value>
+  <data name="ButtonDeletePlanFromUserPlans" xml:space="preserve">
+    <value>Видалити</value>
   </data>
-  <data name="LogoutButton" xml:space="preserve">
-    <value>Вийти</value>
+  <data name="Description" xml:space="preserve">
+    <value>Опис</value>
   </data>
-  <data name="RegisterLink" xml:space="preserve">
-    <value>Зареєструватися</value>
+  <data name="DietDescription" xml:space="preserve">
+    <value>Опис</value>
+  </data>
+  <data name="DietEmpityMessage" xml:space="preserve">
+    <value>Раціон відсутній.</value>
+  </data>
+  <data name="DietListHeader" xml:space="preserve">
+    <value>Раціон</value>
+  </data>
+  <data name="DietName" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="ExerciseCountReps" xml:space="preserve">
+    <value>Кількість повторів</value>
+  </data>
+  <data name="ExerciseCountSets" xml:space="preserve">
+    <value>Кількість підходів</value>
+  </data>
+  <data name="ExerciseDesciption" xml:space="preserve">
+    <value>Опис</value>
+  </data>
+  <data name="ExerciseImage" xml:space="preserve">
+    <value>Зображення</value>
+  </data>
+  <data name="ExerciseListEmpityMessage" xml:space="preserve">
+    <value>Тренувальні вправи відсутні.</value>
+  </data>
+  <data name="ExerciseName" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="ExercisesListHeader" xml:space="preserve">
+    <value>Список тренувальних вправ</value>
+  </data>
+  <data name="Header" xml:space="preserve">
+    <value>Тренувальний план</value>
+  </data>
+  <data name="ImagePathString" xml:space="preserve">
+    <value>Назва файлу</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
   </data>
 </root>

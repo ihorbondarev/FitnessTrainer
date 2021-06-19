@@ -1,0 +1,48 @@
+﻿@model FitnessTrainer.ViewModels.UserViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<h1 class="mt-5">@Localizer["Header"]</h1>
+<br />
+<div class="row mt-5">
+    <div class="col-md-9 col-sm-12">
+        <form asp-action="EditUserProfile" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <p>@Model.Name</p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">@Localizer["Age"]</label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">@Localizer["Weigth"]</label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">@Localizer["Height"]</label>
+                <input asp-for="Height" class="form-control" />
+                <span asp-validation-for="Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @if(Model.Subscription == Status.Default)
+            {
+                <p>@Localizer["DefaultStatus"]  <a class="btn btn-link">@Localizer["GetPremium"]</a></p>
+            } else
+            {
+                <p class="text-success">@Localizer["PremiumSubscription"]</p>
+            }
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Localizer["EditUserProfileButton"]" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

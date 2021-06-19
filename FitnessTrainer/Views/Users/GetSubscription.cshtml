@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<h1 class="text-center mt-5">@Localizer["Header"]</h1>
+<h3 class="text-center mt-5 text-muted">@Localizer["Header3"]</h3>
+<div class="d-flex justify-content-center">
+    <a class="btn btn-outline-secondary mt-5" asp-action="ApplyPremiumStatus">@Localizer["Header4"]</a>
+</div>

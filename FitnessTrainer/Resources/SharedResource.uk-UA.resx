@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ComparePasswordsErrorMessage" xml:space="preserve">
+    <value>* Паролі не співпадають.</value>
+  </data>
+  <data name="ConfirmPasswordPlaceholder" xml:space="preserve">
+    <value>Підтвердити пароль</value>
+  </data>
+  <data name="ConfirmPasswordRequiredError" xml:space="preserve">
+    <value>* Підтвердіть пароль.</value>
+  </data>
+  <data name="GuidIdentificator" xml:space="preserve">
+    <value>Ідентифікатор користувача</value>
+  </data>
+  <data name="RegisterPasswordRequiredError" xml:space="preserve">
+    <value>* Введіть пароль.</value>
+  </data>
+  <data name="RegisterUserNameRequiredError" xml:space="preserve">
+    <value>* Введіть логін.</value>
+  </data>
   <data name="RequiredDietNameError" xml:space="preserve">
     <value>* Поле назви раціону обов'язкове для заповнення.</value>
   </data>
@@ -135,8 +153,32 @@
   <data name="RequiredWorkoutPlanNameError" xml:space="preserve">
     <value>* Поле назви тренувального плану обов'язкове для заповнення.</value>
   </data>
+  <data name="SignupButton" xml:space="preserve">
+    <value>Зареєструватися</value>
+  </data>
+  <data name="UserAgeViewModel" xml:space="preserve">
+    <value>Вік</value>
+  </data>
+  <data name="UserHeightViewModel" xml:space="preserve">
+    <value>Зріст</value>
+  </data>
+  <data name="UserNameAlreadyExistsError" xml:space="preserve">
+    <value>Користувач з таким логіном вже зареєстрований.</value>
+  </data>
+  <data name="UserNameViewModel" xml:space="preserve">
+    <value>Логін</value>
+  </data>
   <data name="UserNotFoundError" xml:space="preserve">
     <value>Користувача не знайдено.</value>
+  </data>
+  <data name="UserSubscriptionViewModel" xml:space="preserve">
+    <value>Підписка</value>
+  </data>
+  <data name="UserWeightViewModel" xml:space="preserve">
+    <value>Вага</value>
+  </data>
+  <data name="UserWorkoutPlansViewModel" xml:space="preserve">
+    <value>Тренувальні плани</value>
   </data>
   <data name="WrongPasswordError" xml:space="preserve">
     <value>Невірний пароль.</value>

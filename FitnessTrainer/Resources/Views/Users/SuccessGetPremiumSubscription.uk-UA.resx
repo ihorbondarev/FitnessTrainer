@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HelloUserString" xml:space="preserve">
-    <value>Привіт</value>
+  <data name="Header1" xml:space="preserve">
+    <value>Преміум-підписку успішно отримано</value>
   </data>
-  <data name="LoginLink" xml:space="preserve">
-    <value>Увійти</value>
+  <data name="Header2" xml:space="preserve">
+    <value>Тепер Ви можете вибирати преміум-плани навчання.</value>
   </data>
-  <data name="LogoutButton" xml:space="preserve">
-    <value>Вийти</value>
-  </data>
-  <data name="RegisterLink" xml:space="preserve">
-    <value>Зареєструватися</value>
+  <data name="Header3" xml:space="preserve">
+    <value>Обрати план тренувань</value>
   </data>
 </root>

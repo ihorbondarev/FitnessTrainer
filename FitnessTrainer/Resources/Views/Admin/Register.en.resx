@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HelloUserString" xml:space="preserve">
-    <value>Привіт</value>
+  <data name="Header" xml:space="preserve">
+    <value>Sign up</value>
   </data>
-  <data name="LoginLink" xml:space="preserve">
-    <value>Увійти</value>
+  <data name="LoginPlaceholder" xml:space="preserve">
+    <value>Login</value>
   </data>
-  <data name="LogoutButton" xml:space="preserve">
-    <value>Вийти</value>
-  </data>
-  <data name="RegisterLink" xml:space="preserve">
-    <value>Зареєструватися</value>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Password</value>
   </data>
 </root>

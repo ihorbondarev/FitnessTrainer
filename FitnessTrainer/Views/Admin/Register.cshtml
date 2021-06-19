@@ -1,26 +1,29 @@
 ﻿@model FitnessTrainer.ViewModels.RegisterViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
-<div class="row justify-content-center">
-    <div class="col-5">
-        <h1>Реєстрація</h1>
+<div class="row justify-content-center" style="margin-top: 10%;">
+    <div class="shadow py-5 col-lg-4 col-md-5 col-sm-9 col-9">
+        <h1 class="text-center mb-5">@Localizer["Header"]</h1>
 
         <form asp-controller="Admin" asp-action="Register" method="post">
-            <div asp-validation-summary="All"></div>
-            <div class="form-floating mb-3">
-                <label for="floatingInput">Логін</label>
-                <input asp-for="UserName" class="form-control" id="floatingInput" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-4">
+                <input asp-for="UserName" placeholder="@Localizer["LoginPlaceholder"]" class="form-control" id="floatingInput" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
-            <div class="form-floating">
-                <label for="floatingPassword">Пароль</label>
-                <input asp-for="Password" type="password" class="form-control" id="floatingPassword">
+            <div class="form-floating mb-4">
+                <input asp-for="Password" type="password" placeholder="@Localizer["PasswordPlaceholder"]" class="form-control" id="floatingPassword">
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="form-floating">
-                <label for="floatingPassword">Підтвердження паролю</label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control" id="floatingPassword">
+            <div class="form-floating mb-4">
+                <input asp-for="ConfirmPassword" type="password" placeholder="@SharedLocalizer["ConfirmPasswordPlaceholder"]" class="form-control" id="floatingPassword">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <br />
-            <div>
-                <input class="btn btn-primary" type="submit" value="Зареєструватися" />
+            <div class="d-flex justify-content-center">
+                <input class="btn btn-outline-secondary" type="submit" value="@SharedLocalizer["SignupButton"]" />
             </div>
         </form>
     </div>

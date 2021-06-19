@@ -129,6 +129,12 @@
   <data name="RecForFoods" xml:space="preserve">
     <value>Diet</value>
   </data>
+  <data name="User" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="UserPlans" xml:space="preserve">
+    <value>Workout plans</value>
+  </data>
   <data name="WorkoutPlans" xml:space="preserve">
     <value>Workout plans</value>
   </data>

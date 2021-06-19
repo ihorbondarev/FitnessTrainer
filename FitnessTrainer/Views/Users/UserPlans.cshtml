@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FitnessTrainer.DomainEntities.Entity.WorkoutPlan>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Index";
+}
+
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Core.Common;
+@using X.PagedList
+
+<h1 class="mt-5">@Localizer["Header"]</h1>
+<br />
+<div class="container mt-5">
+    <div class="row justify-content-start">
+        <div class="col-8">
+            <form class="form-inline" asp-controller="Users" asp-action="UserPlans" method="get">
+                <input class="form-control mr-sm-2" name="searchString" type="search" placeholder="@Localizer["SearchPlaceholder"]" aria-label="Поиск" value="@ViewData["CurrentFilter"]" />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">@Localizer["SearchButton"]</button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-end mt-3 mr-1">
+        @Html.PagedListPager((IPagedList)ViewBag.workoutPlansList, page => Url.Action("UserPlans", new { page = page, searchString = @ViewData["CurrentFilter"] }), new PagedListRenderOptions
+{
+    LinkToFirstPageFormat = "<<",
+    LinkToLastPageFormat = ">>",
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new string[] { "page-link" }
+})
+    </div>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Localizer["TableImage"]
+            </th>
+            <th>
+                @Localizer["TableName"]
+            </th>
+            <th class="d-none d-md-table-cell">
+                @Localizer["TableStatus"]
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.workoutPlansList)
+        {
+            <tr>
+                <td>
+                    <img src="~/images/@item.ImagePath"
+                         class="rounded"
+                         height="100" width="100"
+                         asp-append-version="true" />
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td class="d-none d-md-table-cell">
+                    @item.Status
+                </td>
+                <td class="p-2">
+                    <div class="row mb-1"><a class="btn btn-outline-warning" asp-action="AddWorkoutPlanToUserPlans" asp-route-id="@item.Id">@Localizer["TableButtonAdd"]</a></div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

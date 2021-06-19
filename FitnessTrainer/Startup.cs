@@ -60,6 +60,7 @@ namespace FitnessTrainer
             services.AddTransient<IRecForFoodService, RecForFoodService>();
             services.AddTransient<IExerciseService, ExerciseService>();
             services.AddTransient<IWorkoutPlanService, WorkoutPlanService>();
+            services.AddTransient<IUserService, UserService>();
 
             #region inject localization
             services.AddLocalization(options => options.ResourcesPath = "Resources");

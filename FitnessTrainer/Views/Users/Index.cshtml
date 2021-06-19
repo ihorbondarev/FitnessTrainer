@@ -1,0 +1,96 @@
+﻿@model FitnessTrainer.ViewModels.UserViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<h1 class="mt-5">@Localizer["Header"] @Model.Name!</h1>
+<br />
+
+
+<div class="mt-5">
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2 mt-2">
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt class="col-sm-2 mt-2">
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt class="col-sm-2 mt-2">
+            @Html.DisplayNameFor(model => model.Height)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Height)
+        </dd>
+        <dt class="col-sm-2 mt-2">
+            @Html.DisplayNameFor(model => model.Subscription)
+        </dt>
+        <dd class="col-sm-9 d-inline">
+            @if (Model.Subscription == Status.Default)
+            {
+            <p>@Localizer["SubscriptionType"]  <a class="btn btn-link" asp-action="GetSubscription">@Localizer["GetSubscriptionLink"]</a></p>
+            }
+            else
+            {
+        <p class="text-success">@Localizer["SubscriptionPremium"]</p>
+            }
+        </dd>
+    </dl>
+</div>
+
+<div class="my-2">
+    <a class="btn btn-secondary" asp-action="EditUserProfile" asp-route-userid="@Model.Id">@Localizer["EditProfileButton"]</a>
+</div>
+
+@if (Model.WorkoutPlans.Count > 0)
+{
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>@Localizer["TablePlanImage"]</th>
+                    <th>@Localizer["TablePlanName"]</th>
+                    <th class="d-none d-md-table-cell">@Localizer["TablePlanStatus"]</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.WorkoutPlans)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/images/@item.ImagePath"
+                                 class="rounded"
+                                 height="100" width="100"
+                                 asp-append-version="true" />
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td class="d-none d-md-table-cell">
+                            @item.Status
+                        </td>
+                        <td class="p-2">
+                            <div class="row mb-1"><a class="btn btn-outline-info" asp-action="UserPlanDetails" asp-route-id="@item.Id">@Localizer["ButtonDetails"]</a></div>
+                            <div class="row"><a class="btn btn-outline-danger" asp-action="DeletePlanFromUsersPlans" asp-route-id="@item.Id">@Localizer["ButtonDelete"]</a></div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+} else
+            {
+                <h3 class="text-warning">@Localizer["WorkoutPlansEmpityMessage"] <a class="btn btn-link" asp-action="UserPlans">@Localizer["ChoosePlanLink"]</a></h3>
+            }

@@ -10,6 +10,7 @@ using FitnessTrainer.DataAccess.DbContexts;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
+using System.Linq;
 
 namespace FitnessTrainer.Controllers
 {
@@ -91,14 +92,16 @@ namespace FitnessTrainer.Controllers
                     _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "MobileUser")).GetAwaiter().GetResult();
                     await _signInManager.SignInAsync(user, false);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Users");
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
+                    var userNameExist = _context.ApplicationUsers.Any(x => user.UserName == x.UserName);
+                    if(userNameExist)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }   
+                        ModelState.AddModelError("", _localizer["UserNameAlreadyExistsError"]);
+                    }
+                    return View(model);
                 }
             }
             return View(model);
@@ -122,16 +125,15 @@ namespace FitnessTrainer.Controllers
             } else if(await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-
+                
                 if (result.Succeeded)
                 {
-                    if (!User.IsInRole("Administrator"))
+                    if (user.UserName == "Administrator")
                     {
-                        return Redirect("/Admin/Index");
-                    }
-                    else
+                        return RedirectToAction("Index", "Admin");
+                    } else
                     {
-                        return Redirect("/Admin/Index");
+                        return RedirectToAction("Index", "Users");
                     }
                 }
             } else
@@ -142,11 +144,11 @@ namespace FitnessTrainer.Controllers
 
             return View(model);
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return Redirect("/Admin/Login");
+            return RedirectToAction("Login", "Admin");
         }
     }
 }

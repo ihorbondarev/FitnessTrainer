@@ -29,9 +29,9 @@
     }
     else
     {
-        @*<li class="nav-item">
-                <a class="nav-link text-dark" asp-action="Register" asp-controller="Admin">Зареєструватися</a>
-            </li>*@
+        <li class="nav-item">
+                <a class="nav-link" asp-action="Register" asp-controller="Admin">@Localizer["RegisterLink"]</a>
+            </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="Admin" asp-action="Login">@Localizer["LoginLink"]</a>
         </li>

@@ -8,13 +8,13 @@ namespace FitnessTrainer.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "RegisterUserNameRequiredError")]
         public string UserName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "RegisterPasswordRequiredError")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [Required(ErrorMessage = "ConfirmPasswordRequiredError")]
+        [Compare("Password", ErrorMessage = "ComparePasswordsErrorMessage")]
         public string ConfirmPassword { get; set; }
     }
 }

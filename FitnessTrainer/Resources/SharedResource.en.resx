@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ComparePasswordsErrorMessage" xml:space="preserve">
+    <value>* Password mismatch.</value>
+  </data>
+  <data name="ConfirmPasswordPlaceholder" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="ConfirmPasswordRequiredError" xml:space="preserve">
+    <value>* Confirm password filed is required.</value>
+  </data>
+  <data name="GuidIdentificator" xml:space="preserve">
+    <value>User's identificator</value>
+  </data>
+  <data name="RegisterPasswordRequiredError" xml:space="preserve">
+    <value>* Password field is required.</value>
+  </data>
+  <data name="RegisterUserNameRequiredError" xml:space="preserve">
+    <value>* Login field is requried.</value>
+  </data>
   <data name="RequiredDietNameError" xml:space="preserve">
     <value>* Diet name field is required.</value>
   </data>
@@ -135,8 +153,32 @@
   <data name="RequiredWorkoutPlanNameError" xml:space="preserve">
     <value>* Workout plan name field is required.</value>
   </data>
+  <data name="SignupButton" xml:space="preserve">
+    <value>Sign up</value>
+  </data>
+  <data name="UserAgeViewModel" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="UserHeightViewModel" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="UserNameAlreadyExistsError" xml:space="preserve">
+    <value>A user with such a login is already registered.</value>
+  </data>
+  <data name="UserNameViewModel" xml:space="preserve">
+    <value>User name</value>
+  </data>
   <data name="UserNotFoundError" xml:space="preserve">
     <value>User not found.</value>
+  </data>
+  <data name="UserSubscriptionViewModel" xml:space="preserve">
+    <value>Subscription</value>
+  </data>
+  <data name="UserWeightViewModel" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="UserWorkoutPlansViewModel" xml:space="preserve">
+    <value>Workout plans</value>
   </data>
   <data name="WrongPasswordError" xml:space="preserve">
     <value>Wrong password.</value>

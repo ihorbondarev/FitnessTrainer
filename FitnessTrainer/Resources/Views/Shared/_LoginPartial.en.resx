@@ -121,9 +121,12 @@
     <value>Hello</value>
   </data>
   <data name="LoginLink" xml:space="preserve">
-    <value>Log in</value>
+    <value>Sign in</value>
   </data>
   <data name="LogoutButton" xml:space="preserve">
-    <value>Log out</value>
+    <value>Sign out</value>
+  </data>
+  <data name="RegisterLink" xml:space="preserve">
+    <value>Sign up</value>
   </data>
 </root>
