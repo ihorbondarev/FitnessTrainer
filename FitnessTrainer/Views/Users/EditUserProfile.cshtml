@@ -17,11 +17,11 @@
             <div class="form-group">
                 @if (Model.Subscription == Status.Default)
                 {
-                    <p>@Localizer["SubscriptionTypeField"] <strong>@Localizer["DefaultStatus"]  <a class="btn btn-link">@Localizer["GetPremium"]</a></strong></p>
+                    <p><strong>@Localizer["SubscriptionTypeField"]  </strong>@Localizer["DefaultStatus"]<a class="btn btn-link font-weight-light" asp-action="GetSubscription">  @Localizer["GetPremium"]</a></p>
                 }
                 else
                 {
-                    <p>@Localizer["SubscriptionTypeField"] <strong class="text-success">@Localizer["PremiumSubscription"]</strong></p>
+                    <p><strong>@Localizer["SubscriptionTypeField"]</strong> <strong class="text-success">@Localizer["PremiumSubscription"]</strong></p>
                 }
 
             </div>

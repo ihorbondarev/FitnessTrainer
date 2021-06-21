@@ -127,6 +127,13 @@ namespace FitnessTrainer.Services
         {
             RecForFood model = _context.RecForFoods.Find(id);
 
+            List<WorkoutPlan> planList = _context.WorkoutPlans.Include(c => c.RecForFood).Where(i => i.RecForFood.Id == id).ToList();
+
+            foreach(var rec in planList)
+            {
+                _context.RecForFoods.Remove(model);
+            }
+
             _context.RecForFoods.Remove(model);
             _context.SaveChanges();
         }
