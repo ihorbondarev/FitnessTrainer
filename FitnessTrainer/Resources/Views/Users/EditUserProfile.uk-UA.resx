@@ -138,6 +138,9 @@
   <data name="PremiumSubscription" xml:space="preserve">
     <value>Преміум підписка.</value>
   </data>
+  <data name="SubscriptionTypeField" xml:space="preserve">
+    <value>Тип підписки:</value>
+  </data>
   <data name="Weigth" xml:space="preserve">
     <value>Вага</value>
   </data>

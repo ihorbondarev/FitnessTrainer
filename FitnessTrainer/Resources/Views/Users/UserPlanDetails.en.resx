@@ -159,13 +159,34 @@
   <data name="ExercisesListHeader" xml:space="preserve">
     <value>Exercises list</value>
   </data>
+  <data name="FoodListHeader" xml:space="preserve">
+    <value>Food list</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>Deatils of workout plan</value>
+  </data>
+  <data name="HeaderFoodEmpity" xml:space="preserve">
+    <value>Food list is empity</value>
   </data>
   <data name="ImagePathString" xml:space="preserve">
     <value>File name</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
+  </data>
+  <data name="TableFoodCalories" xml:space="preserve">
+    <value>Count of calories</value>
+  </data>
+  <data name="TableFoodCarbohydrates" xml:space="preserve">
+    <value>Count of carbohydrates</value>
+  </data>
+  <data name="TableFoodFats" xml:space="preserve">
+    <value>Count of fats</value>
+  </data>
+  <data name="TableFoodName" xml:space="preserve">
+    <value>Food name</value>
+  </data>
+  <data name="TableFoodProteins" xml:space="preserve">
+    <value>Count of proteins</value>
   </data>
 </root>

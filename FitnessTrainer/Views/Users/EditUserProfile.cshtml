@@ -12,9 +12,20 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <p>@Model.Name</p>
+                <h3>@Model.Name</h3>
             </div>
             <div class="form-group">
+                @if (Model.Subscription == Status.Default)
+                {
+                    <p>@Localizer["SubscriptionTypeField"] <strong>@Localizer["DefaultStatus"]  <a class="btn btn-link">@Localizer["GetPremium"]</a></strong></p>
+                }
+                else
+                {
+                    <p>@Localizer["SubscriptionTypeField"] <strong class="text-success">@Localizer["PremiumSubscription"]</strong></p>
+                }
+
+            </div>
+            <div class="form-group mt-3">
                 <label class="control-label">@Localizer["Age"]</label>
                 <input asp-for="Age" class="form-control" />
                 <span asp-validation-for="Age" class="text-danger"></span>
@@ -28,16 +39,6 @@
                 <label class="control-label">@Localizer["Height"]</label>
                 <input asp-for="Height" class="form-control" />
                 <span asp-validation-for="Height" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @if(Model.Subscription == Status.Default)
-            {
-                <p>@Localizer["DefaultStatus"]  <a class="btn btn-link">@Localizer["GetPremium"]</a></p>
-            } else
-            {
-                <p class="text-success">@Localizer["PremiumSubscription"]</p>
-            }
-
             </div>
             <div class="form-group">
                 <input type="submit" value="@Localizer["EditUserProfileButton"]" class="btn btn-outline-primary" />

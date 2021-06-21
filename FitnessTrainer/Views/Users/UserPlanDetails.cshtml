@@ -16,19 +16,13 @@
 }
 <div class="mt-5">
     <dl class="row">
-        <dt class="col-sm-2 mt-2">
+        <dt class="col-sm-2">
             @Localizer["Status"]
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
-        <dt class="col-sm-2 mt-2">
-            @Localizer["ImagePathString"]
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ImagePathString)
-        </dd>
-        <dt class="col-sm-2 mt-2">
+        <dt class="col-sm-2">
             @Localizer["Description"]
         </dt>
         <dd class="col-sm-10">
@@ -54,16 +48,43 @@
                 @Model.RecForFood.Description
             </dd>
         </dl>
+        <br />
+        <h4 class="mt-5">@Localizer["FoodListHeader"]</h4>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Localizer["TableFoodName"]</th>
+                    <th>@Localizer["TableFoodCalories"]</th>
+                    <th class="d-none d-sm-table-cell">@Localizer["TableFoodProteins"]</th>
+                    <th class="d-none d-sm-table-cell">@Localizer["TableFoodFats"]</th>
+                    <th class="d-none d-sm-table-cell">@Localizer["TableFoodCarbohydrates"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.RecForFood.Foods)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Calories</td>
+                        <td class="d-none d-sm-table-cell">@item.Proteins</td>
+                        <td class="d-none d-sm-table-cell">@item.Fats</td>
+                        <td class="d-none d-sm-table-cell">@item.Carbohydrates</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
     }
     else
     {
         <hr />
-        <h4 class="text-warning">@Localizer["DietEmpityMessage"]</h4>
+        <h4 class="text-warning mt-5">@Localizer["DietEmpityMessage"]</h4>
     }
     @if (Model.Exercises.Count > 0)
     {
         <hr />
-        <h4>@Localizer["ExercisesListHeader"]</h4>
+        <h4 class="mt-5">@Localizer["ExercisesListHeader"]</h4>
         <br />
         <table class="table table-hover">
             <thead>

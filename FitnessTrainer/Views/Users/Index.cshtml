@@ -39,23 +39,22 @@
         <dd class="col-sm-9 d-inline">
             @if (Model.Subscription == Status.Default)
             {
-            <p>@Localizer["SubscriptionType"]  <a class="btn btn-link" asp-action="GetSubscription">@Localizer["GetSubscriptionLink"]</a></p>
+                <p>@Localizer["SubscriptionType"]  <a class="btn btn-link" asp-action="GetSubscription">@Localizer["GetSubscriptionLink"]</a></p>
             }
             else
             {
-        <p class="text-success">@Localizer["SubscriptionPremium"]</p>
+                <p class="text-success">@Localizer["SubscriptionPremium"]</p>
             }
         </dd>
     </dl>
-</div>
-
-<div class="my-2">
-    <a class="btn btn-secondary" asp-action="EditUserProfile" asp-route-userid="@Model.Id">@Localizer["EditProfileButton"]</a>
+    <div class="my-2">
+        <a class="btn btn-outline-secondary" asp-action="EditUserProfile" asp-route-userid="@Model.Id">@Localizer["EditProfileButton"]</a>
+    </div>
 </div>
 
 @if (Model.WorkoutPlans.Count > 0)
 {
-    <div>
+    <div class="mt-5">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -92,5 +91,5 @@
     </div>
 } else
             {
-                <h3 class="text-warning">@Localizer["WorkoutPlansEmpityMessage"] <a class="btn btn-link" asp-action="UserPlans">@Localizer["ChoosePlanLink"]</a></h3>
+                <h3 class="text-warning mt-5">@Localizer["WorkoutPlansEmpityMessage"] <a class="btn btn-link" asp-action="UserPlans">@Localizer["ChoosePlanLink"]</a></h3>
             }

@@ -159,13 +159,34 @@
   <data name="ExercisesListHeader" xml:space="preserve">
     <value>Список тренувальних вправ</value>
   </data>
+  <data name="FoodListHeader" xml:space="preserve">
+    <value>Список продуктів</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>Тренувальний план</value>
+  </data>
+  <data name="HeaderFoodEmpity" xml:space="preserve">
+    <value>Продукти не задані</value>
   </data>
   <data name="ImagePathString" xml:space="preserve">
     <value>Назва файлу</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Статус</value>
+  </data>
+  <data name="TableFoodCalories" xml:space="preserve">
+    <value>Калорії</value>
+  </data>
+  <data name="TableFoodCarbohydrates" xml:space="preserve">
+    <value>Вуглеводи</value>
+  </data>
+  <data name="TableFoodFats" xml:space="preserve">
+    <value>Жири</value>
+  </data>
+  <data name="TableFoodName" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="TableFoodProteins" xml:space="preserve">
+    <value>Білки</value>
   </data>
 </root>

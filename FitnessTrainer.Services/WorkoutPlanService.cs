@@ -33,7 +33,7 @@ namespace FitnessTrainer.Services
         }
         public async Task<WorkoutPlanViewModel> GetWorkoutPlanViewModelById(int? id)
         {
-            WorkoutPlan plan = _context.WorkoutPlans.Include(c => c.Exercises).Include(v => v.RecForFood).FirstOrDefault(i => i.Id == id);
+            WorkoutPlan plan = _context.WorkoutPlans.Include(c => c.Exercises).Include(v => v.RecForFood.Foods).FirstOrDefault(i => i.Id == id);
 
             WorkoutPlanViewModel model = new WorkoutPlanViewModel()
             {
